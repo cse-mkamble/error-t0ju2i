@@ -1,0 +1,21 @@
+
+# client create command --> npx create-react-app client
+
+# client install dependencies
+
+cd client
+
+npm install axios
+npm install moment
+npm install peerjs
+npm install react-redux
+npm install react-router-dom@5.2.0
+npm install react-share
+npm install redux
+npm install redux-devtools-extension
+npm install redux-thunk
+npm install socket.io-client
+npm install use-state-if-mounted
+npm install react-scripts
+
+cd ..

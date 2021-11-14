@@ -41,6 +41,8 @@ build/Release
 node_modules/
 jspm_packages/
 
+package-lock.json
+
 # TypeScript v1 declaration files
 typings/
 
@@ -69,8 +71,8 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
-.env.test
+# .env
+# .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -102,3 +104,8 @@ dist
 
 # TernJS port file
 .tern-port
+
+uploads
+
+build
+coverage
