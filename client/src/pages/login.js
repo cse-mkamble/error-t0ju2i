@@ -1,4 +1,9 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
+
+import { Link as LinkRouter, useHistory } from 'react-router-dom';
+import { login } from '../redux/actions/authAction';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -28,16 +33,48 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn() {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+export default function Login() {
+
+    const initialState = { email: '', password: '' }
+    const [userData, setUserData] = useState(initialState)
+    const { email, password } = userData
+
+    const [typePass, setTypePass] = useState(false);
+    const [show_password, setShowPassword] = useState('password');
+
+    const { auth } = useSelector(state => state)
+    const dispatch = useDispatch()
+    const history = useHistory()
+
+    useEffect(() => {
+        if (auth.token) history.push("/")
+    }, [auth.token, history])
+
+    const handleChangeInput = e => {
+        const { name, value } = e.target
+        setUserData({ ...userData, [name]: value })
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault()
+
+        console.log(email, password);
+
+        // dispatch(login(userData))
+    }
+
+
+
+
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     const data = new FormData(event.currentTarget);
+    //     // eslint-disable-next-line no-console
+    //     console.log({
+    //         email: data.get('email'),
+    //         password: data.get('password'),
+    //     });
+    // };
 
     return (
         <ThemeProvider theme={theme}>
@@ -73,6 +110,8 @@ export default function SignIn() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            onChange={handleChangeInput}
+                            value={email}
                         />
 
                         <TextField
@@ -81,31 +120,35 @@ export default function SignIn() {
                             fullWidth
                             name="password"
                             label="Password"
-                            type="password"
+                            type={show_password}
                             id="password"
                             autoComplete="current-password"
+                            onChange={handleChangeInput}
+                            value={password}
                         />
 
                         <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
+                            control={<Checkbox value={show_password} color="primary" onClick={(event => { if (show_password === 'password') { setShowPassword('text') } else { setShowPassword('password') } })} />}
+                            label="Show Password"
                         />
+
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            disabled={email && password ? false : true}
                         >
-                            Sign In
+                            Login
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
+                                <Link href="/forgot_password" variant="body2">
                                     Forgot password?
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="/register" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
