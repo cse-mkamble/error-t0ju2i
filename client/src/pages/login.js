@@ -1,98 +1,119 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import { login } from '../redux/actions/authAction'
-import { useDispatch, useSelector } from 'react-redux'
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-
-const Login = () => {
-    const initialState = { email: '', password: '' }
-    const [userData, setUserData] = useState(initialState)
-    const { email, password } = userData
-
-    const [typePass, setTypePass] = useState(false)
-
-    const { auth } = useSelector(state => state)
-    const dispatch = useDispatch()
-    const history = useHistory()
-
-    useEffect(() => {
-        if (auth.token) history.push("/")
-    }, [auth.token, history])
-
-    const handleChangeInput = e => {
-        const { name, value } = e.target
-        setUserData({ ...userData, [name]: value })
-    }
-
-    const handleSubmit = e => {
-        e.preventDefault()
-        dispatch(login(userData))
-    }
-
+function Copyright(props) {
     return (
-        <div className="auth_page">
-            <form onSubmit={handleSubmit}>
-
-                <div style={{ textAlign: "center", margin: '20px' }} >
-                    <div style={{ display: "flex", color: '#636060' }} className="navbar-brand p-0 m-0">
-                        <div style={{
-                            textAlign: "center",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }} >
-                            <img style={{ width: '64px', height: '64px' }} src="https://res.cloudinary.com/mayurkamble/image/upload/v1625477279/icon/ReachMe2_pnioxk.png" />
-                        </div>
-                        <div>
-                            <h1 style={{ margin: '0' }}>ReachMe</h1>
-                            <h6 style={{ margin: '0' }}>Social Networking Platforms</h6>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div className="form-group">
-                    <label htmlFor="exampleInputEmail1">Email address</label>
-                    <input type="email" className="form-control" id="exampleInputEmail1" name="email"
-                        aria-describedby="emailHelp" onChange={handleChangeInput} value={email} />
-
-                    <small id="emailHelp" className="form-text text-muted">
-                        We'll never share your email with anyone else.
-                    </small>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Password</label>
-
-                    <div className="pass">
-
-                        <input type={typePass ? "text" : "password"}
-                            className="form-control" id="exampleInputPassword1"
-                            onChange={handleChangeInput} value={password} name="password" />
-
-                        <small onClick={() => setTypePass(!typePass)}>
-                            {typePass ? 'Hide' : 'Show'}
-                        </small>
-
-                    </div>
-
-                    <small className="form-text text-muted">
-                        <Link to="/forgot_password" >Forgot Password</Link>
-                    </small>
-
-                </div>
-
-                <button type="submit" className="btn btn-primary w-100"
-                    disabled={email && password ? false : true}>
-                    Login
-                </button>
-
-                <p className="my-2">
-                    You don't have an account? <Link to="/register" style={{ color: "crimson" }}>Register Now</Link>
-                </p>
-            </form>
-        </div>
-    )
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+            {'Copyright © '}
+            <Link color="inherit" href="#">
+                FunBook
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
 }
 
-export default Login
+const theme = createTheme();
+
+export default function SignIn() {
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        // eslint-disable-next-line no-console
+        console.log({
+            email: data.get('email'),
+            password: data.get('password'),
+        });
+    };
+
+    return (
+        <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+
+                    <div style={{ display: 'flex' }}>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <img style={{ width: '64px', height: '64px' }} src='https://res.cloudinary.com/mayurkamble/image/upload/v1636887085/icon/bptheulgfynt1npaui36.png' />
+                        </div>
+                        <div>
+                            <Typography component="h1" variant="h5">
+                                <div style={{ margin: '10px', fontFamily: "'Chocolate', sans-serif", fontSize: '40px', fontWeight: 'bolder', letterSpacing: '4px' }}>FunBook</div>
+                            </Typography>
+                        </div>
+                    </div>
+
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                        />
+
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                        />
+
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary" />}
+                            label="Remember me"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Sign In
+                        </Button>
+                        <Grid container>
+                            <Grid item xs>
+                                <Link href="#" variant="body2">
+                                    Forgot password?
+                                </Link>
+                            </Grid>
+                            <Grid item>
+                                <Link href="#" variant="body2">
+                                    {"Don't have an account? Sign Up"}
+                                </Link>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Box>
+                <Copyright sx={{ mt: 8, mb: 4 }} />
+            </Container>
+        </ThemeProvider>
+    );
+}

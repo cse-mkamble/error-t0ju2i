@@ -18,4 +18,10 @@ npm install socket.io-client
 npm install use-state-if-mounted
 npm install react-scripts
 
+# Install MUI, the world's most popular React UI framework.
+
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/material @mui/styled-engine-sc styled-components
+npm install @mui/icons-material
+
 cd ..
