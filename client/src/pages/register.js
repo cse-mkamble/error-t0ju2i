@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,6 +20,8 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormLabel from '@mui/material/FormLabel';
 
+import { register } from '../redux/actions/authAction';
+
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -35,17 +39,37 @@ const theme = createTheme();
 
 export default function Register() {
 
-    const [show_password, setShowPassword] = useState('password');
+    const { auth, alert } = useSelector(state => state)
+    const dispatch = useDispatch()
+    const history = useHistory()
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+    const initialState = {
+        fullname: '', username: '', email: '', password: '', cf_password: '', gender: ''
+    }
+    const [userData, setUserData] = useState(initialState)
+    const { fullname, username, email, password, cf_password } = userData
+
+    const [typePass, setTypePass] = useState(false)
+    const [typeCfPass, setTypeCfPass] = useState(false)
+
+    useEffect(() => {
+        if (auth.token) history.push("/")
+    }, [auth.token, history])
+
+
+    const handleChangeInput = e => {
+        const { name, value } = e.target
+        setUserData({ ...userData, [name]: value })
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        // console.log(userData)
+        dispatch(register(userData));
+    }
+
+
+    const [show_password, setShowPassword] = useState('password');
 
     return (
         <ThemeProvider theme={theme}>
@@ -75,52 +99,59 @@ export default function Register() {
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
-                                    autoComplete="given-name"
-                                    name="firstName"
+                                    error={alert.fullname ? true : false}
+                                    helperText={alert.fullname ? alert.fullname : ''}
+                                    autoComplete="given-full-name"
+                                    name="fullname"
                                     required
                                     fullWidth
-                                    id="firstName"
+                                    id="fullname"
                                     label="Full Name"
                                     autoFocus
+                                    onChange={handleChangeInput}
                                 />
                             </Grid>
-
                             <Grid item xs={12}>
                                 <TextField
+                                    error={alert.username ? true : false}
+                                    helperText={alert.username ? alert.username : ''}
                                     required
                                     fullWidth
-                                    id="lastName"
+                                    id="username"
                                     label="username"
-                                    name="lastName"
-                                    autoComplete="family-name"
+                                    name="username"
+                                    autoComplete="user-name"
+                                    onChange={handleChangeInput}
                                 />
                             </Grid>
-
                             <Grid item xs={12}>
                                 <div style={{ padding: '10px', border: '1px solid #c4c4c4', borderRadius: '5px' }}>
                                     <FormLabel component="legend">Gender</FormLabel>
                                     <RadioGroup required style={{ justifyContent: 'space-between' }}
-                                        fullWidth row aria-label="gender" name="row-radio-buttons-group">
+                                        fullWidth row aria-label="gender" defaultValue="female" name="gender" onChange={handleChangeInput} >
                                         <FormControlLabel value="female" control={<Radio />} label="Female" />
                                         <FormControlLabel value="male" control={<Radio />} label="Male" />
                                         <FormControlLabel value="other" control={<Radio />} label="Other" />
                                     </RadioGroup>
                                 </div>
                             </Grid>
-
                             <Grid item xs={12}>
                                 <TextField
+                                    error={alert.email ? true : false}
+                                    helperText={alert.email ? alert.email : ''}
                                     required
                                     fullWidth
                                     id="email"
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
+                                    onChange={handleChangeInput}
                                 />
                             </Grid>
-
                             <Grid item xs={12}>
                                 <TextField
+                                    error={alert.password ? true : false}
+                                    helperText={alert.password ? alert.password : ''}
                                     required
                                     fullWidth
                                     name="password"
@@ -128,17 +159,21 @@ export default function Register() {
                                     type={show_password}
                                     id="password"
                                     autoComplete="new-password"
+                                    onChange={handleChangeInput}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    error={alert.cf_password ? true : false}
+                                    helperText={alert.cf_password ? alert.cf_password : ''}
                                     required
                                     fullWidth
-                                    name="confirm_password"
+                                    name="cf_password"
                                     label="Confirm Password"
                                     type={show_password}
-                                    id="confirm_password"
+                                    id="cf_password"
                                     autoComplete="new-confirm_password"
+                                    onChange={handleChangeInput}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -170,164 +205,3 @@ export default function Register() {
         </ThemeProvider>
     );
 }
-
-
-
-// import React, { useState, useEffect } from 'react'
-// import { useSelector, useDispatch } from 'react-redux'
-// import { useHistory, Link } from 'react-router-dom'
-// import { register } from '../redux/actions/authAction'
-
-// const Register = () => {
-//     const { auth, alert } = useSelector(state => state)
-//     const dispatch = useDispatch()
-//     const history = useHistory()
-
-//     const initialState = {
-//         fullname: '', username: '', email: '', password: '', cf_password: '', gender: 'male'
-//     }
-//     const [userData, setUserData] = useState(initialState)
-//     const { fullname, username, email, password, cf_password } = userData
-
-//     const [typePass, setTypePass] = useState(false)
-//     const [typeCfPass, setTypeCfPass] = useState(false)
-
-//     useEffect(() => {
-//         if (auth.token) history.push("/")
-//     }, [auth.token, history])
-
-
-//     const handleChangeInput = e => {
-//         const { name, value } = e.target
-//         setUserData({ ...userData, [name]: value })
-//     }
-
-//     const handleSubmit = e => {
-//         e.preventDefault()
-//         dispatch(register(userData))
-//     }
-
-//     return (
-//         <div className="auth_page">
-//             <form onSubmit={handleSubmit}>
-
-//                 <div style={{ textAlign: "center", margin: '20px' }} >
-//                     <div style={{ display: "flex", color: '#636060' }} className="navbar-brand p-0 m-0">
-//                         <div style={{
-//                             textAlign: "center",
-//                             display: 'flex',
-//                             justifyContent: 'center',
-//                             alignItems: 'center'
-//                         }} >
-//                             <img style={{ width: '64px', height: '64px' }} src="https://res.cloudinary.com/mayurkamble/image/upload/v1625477279/icon/ReachMe2_pnioxk.png" />
-//                         </div>
-//                         <div>
-//                             <h1 style={{ margin: '0' }}>ReachMe</h1>
-//                             <h6 style={{ margin: '0' }}>Social Networking Platforms</h6>
-//                         </div>
-//                     </div>
-//                 </div>
-
-//                 <div className="form-group">
-//                     <label htmlFor="fullname">Full Name</label>
-//                     <input type="text" className="form-control" id="fullname" name="fullname"
-//                         onChange={handleChangeInput} value={fullname}
-//                         style={{ background: `${alert.fullname ? '#fd2d6a14' : ''}` }} />
-
-//                     <small className="form-text text-danger">
-//                         {alert.fullname ? alert.fullname : ''}
-//                     </small>
-//                 </div>
-
-//                 <div className="form-group">
-//                     <label htmlFor="username">User Name</label>
-//                     <input type="text" className="form-control" id="username" name="username"
-//                         onChange={handleChangeInput} value={username.toLowerCase().replace(/ /g, '')}
-//                         style={{ background: `${alert.username ? '#fd2d6a14' : ''}` }} />
-
-//                     <small className="form-text text-danger">
-//                         {alert.username ? alert.username : ''}
-//                     </small>
-//                 </div>
-
-//                 <div className="form-group">
-//                     <label htmlFor="exampleInputEmail1">Email address</label>
-//                     <input type="email" className="form-control" id="exampleInputEmail1" name="email"
-//                         onChange={handleChangeInput} value={email}
-//                         style={{ background: `${alert.email ? '#fd2d6a14' : ''}` }} />
-
-//                     <small className="form-text text-danger">
-//                         {alert.email ? alert.email : ''}
-//                     </small>
-//                 </div>
-
-//                 <div className="form-group">
-//                     <label htmlFor="exampleInputPassword1">Password</label>
-
-//                     <div className="pass">
-
-//                         <input type={typePass ? "text" : "password"}
-//                             className="form-control" id="exampleInputPassword1"
-//                             onChange={handleChangeInput} value={password} name="password"
-//                             style={{ background: `${alert.password ? '#fd2d6a14' : ''}` }} />
-
-//                         <small onClick={() => setTypePass(!typePass)}>
-//                             {typePass ? 'Hide' : 'Show'}
-//                         </small>
-//                     </div>
-
-//                     <small className="form-text text-danger">
-//                         {alert.password ? alert.password : ''}
-//                     </small>
-//                 </div>
-
-//                 <div className="form-group">
-//                     <label htmlFor="cf_password">Confirm Password</label>
-
-//                     <div className="pass">
-
-//                         <input type={typeCfPass ? "text" : "password"}
-//                             className="form-control" id="cf_password"
-//                             onChange={handleChangeInput} value={cf_password} name="cf_password"
-//                             style={{ background: `${alert.cf_password ? '#fd2d6a14' : ''}` }} />
-
-//                         <small onClick={() => setTypeCfPass(!typeCfPass)}>
-//                             {typeCfPass ? 'Hide' : 'Show'}
-//                         </small>
-//                     </div>
-
-//                     <small className="form-text text-danger">
-//                         {alert.cf_password ? alert.cf_password : ''}
-//                     </small>
-//                 </div>
-
-//                 <div className="row justify-content-between mx-0 mb-1">
-//                     <label htmlFor="male">
-//                         Male: <input type="radio" id="male" name="gender"
-//                             value="male" defaultChecked onChange={handleChangeInput} />
-//                     </label>
-
-//                     <label htmlFor="female">
-//                         Female: <input type="radio" id="female" name="gender"
-//                             value="female" onChange={handleChangeInput} />
-//                     </label>
-
-//                     <label htmlFor="other">
-//                         Other: <input type="radio" id="other" name="gender"
-//                             value="other" onChange={handleChangeInput} />
-//                     </label>
-//                 </div>
-
-//                 <button type="submit" className="btn btn-primary w-100">
-//                     Register
-//                 </button>
-
-//                 <p className="my-2">
-//                     Already have an account? <Link to="/" style={{ color: "crimson" }}>Login Now</Link>
-//                 </p>
-//             </form>
-//         </div>
-//     )
-// }
-
-// export default Register

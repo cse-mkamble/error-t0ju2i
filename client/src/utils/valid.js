@@ -25,6 +25,12 @@ const valid = ({fullname, username, email, password, cf_password}) => {
         err.password = "Password must be at least 6 characters."
     }
 
+    if(!cf_password) {
+        err.cf_password = "Please enter confirm password."
+    }else if(password.length < 6){
+        err.cf_password = " Confirm Password must be at least 6 characters."
+    }
+
     if(password !== cf_password) {
         err.cf_password = "Confirm password did not match."
     }

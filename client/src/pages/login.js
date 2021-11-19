@@ -72,18 +72,6 @@ export default function Login() {
     }
 
 
-
-
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     const data = new FormData(event.currentTarget);
-    //     // eslint-disable-next-line no-console
-    //     console.log({
-    //         email: data.get('email'),
-    //         password: data.get('password'),
-    //     });
-    // };
-
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -176,7 +164,7 @@ export default function Login() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            disabled={email && password && rememberMe ? false : true}
+                            disabled={email && password ? false : true}
                         >
                             Login
                         </Button>
