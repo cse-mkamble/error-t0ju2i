@@ -66,11 +66,9 @@ export default function Login() {
     }
 
     const handleSubmit = e => {
-        e.preventDefault()
-
-        console.log(email, password);
-
-        // dispatch(login(userData))
+        e.preventDefault();
+        console.log(userData);
+        dispatch(login(userData));
     }
 
 

@@ -1,22 +1,26 @@
-import React from 'react'
+import React from 'react';
 
-const Toast = ({msg, handleShow, bgColor}) => {
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Stack from '@mui/material/Stack';
+
+const Toast = ({ msg, handleShow, severityType }) => {
     return (
-        <div className={`toast show position-fixed text-light ${bgColor}`}
-        style={{top: '5px', right: '5px', minWidth: '200px', zIndex: 50}}>
-            <div className={`toast-header text-light ${bgColor}`}>
-                <strong className="mr-auto text-light">{msg.title}</strong>
-                <button className="ml-2 mb-1 close text-light"
-                data-dismiss="toast" style={{outline: 'none'}}
-                onClick={handleShow}>
-                    &times;
-                </button>
+        <Stack sx={{ width: '100%' }} spacing={2}>
+            <div
+                style={{ top: '5px', right: '5px', minWidth: '300px', position: 'fixed', zIndex: 50 }}
+            >
+                <Alert
+                    variant="filled"
+                    severity={severityType}
+                    onClose={handleShow}
+                >
+                    <AlertTitle>{msg.title}</AlertTitle>
+                    {msg.body}
+                </Alert>
             </div>
-            <div className="toast-body">
-                {msg.body}
-            </div>
-        </div>
-    )
+        </Stack>
+    );
 }
 
-export default Toast
+export default Toast;

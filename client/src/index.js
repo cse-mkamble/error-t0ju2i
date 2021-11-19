@@ -139,5 +139,5 @@ ReactDOM.render(
   <DataProvider>
     <MainRoute />
   </DataProvider>,
-  document.getElementById('main')
+  document.getElementById('app-main')
 );
