@@ -87,7 +87,7 @@ export default function Login() {
 
                     <div style={{ display: 'flex' }}>
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <img style={{ width: '58px', height: '58px' }} src='https://res.cloudinary.com/mayurkamble/image/upload/v1636887085/icon/bptheulgfynt1npaui36.png' />
+                            <img style={{ width: '54px', height: '54px' }} src='https://res.cloudinary.com/mayurkamble/image/upload/v1636887085/icon/bptheulgfynt1npaui36.png' />
                         </div>
                         <div>
                             <Typography component="h1" variant="h5">
