@@ -18,6 +18,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { InputAdornment, IconButton } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
+
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -40,7 +45,12 @@ export default function Login() {
     const { email, password } = userData
 
     const [typePass, setTypePass] = useState(false);
-    const [show_password, setShowPassword] = useState('password');
+    const [rememberMe, setRememberMe] = useState(false);
+
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+    const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
 
     const { auth } = useSelector(state => state)
     const dispatch = useDispatch()
@@ -91,7 +101,7 @@ export default function Login() {
 
                     <div style={{ display: 'flex' }}>
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <img style={{ width: '64px', height: '64px' }} src='https://res.cloudinary.com/mayurkamble/image/upload/v1636887085/icon/bptheulgfynt1npaui36.png' />
+                            <img style={{ width: '58px', height: '58px' }} src='https://res.cloudinary.com/mayurkamble/image/upload/v1636887085/icon/bptheulgfynt1npaui36.png' />
                         </div>
                         <div>
                             <Typography component="h1" variant="h5">
@@ -120,16 +130,47 @@ export default function Login() {
                             fullWidth
                             name="password"
                             label="Password"
-                            type={show_password}
+                            type={showPassword ? "text" : "password"}
                             id="password"
                             autoComplete="current-password"
                             onChange={handleChangeInput}
                             value={password}
+                            InputProps={{ // <-- This is where the toggle button is added.
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                        >
+                                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
                         />
 
+                        <Grid container justifyContent="flex-end">
+                            <Grid item>
+                                <Link href="/forgot_password" variant="body2">
+                                    Forgot password?
+                                </Link>
+                            </Grid>
+                        </Grid>
+
                         <FormControlLabel
-                            control={<Checkbox value={show_password} color="primary" onClick={(event => { if (show_password === 'password') { setShowPassword('text') } else { setShowPassword('password') } })} />}
-                            label="Show Password"
+                            control={<Checkbox
+                                value={rememberMe}
+                                color="primary"
+                                onClick={((event) => {
+                                    if (rememberMe) {
+                                        setRememberMe(false)
+                                    } else {
+                                        setRememberMe(true)
+                                    }
+                                })}
+                            />}
+                            label="Remember Me"
                         />
 
                         <Button
@@ -137,25 +178,20 @@ export default function Login() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            disabled={email && password ? false : true}
+                            disabled={email && password && rememberMe ? false : true}
                         >
                             Login
                         </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="/forgot_password" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
+                        <Grid container justifyContent="center" >
                             <Grid item>
                                 <Link href="/register" variant="body2">
-                                    {"Don't have an account? Sign Up"}
+                                    {"Don't have an account? Register Now"}
                                 </Link>
                             </Grid>
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
+                <Copyright sx={{ mt: 10 }} />
             </Container>
         </ThemeProvider>
     );
