@@ -62,6 +62,37 @@ export const refreshToken = () => async (dispatch) => {
     }
 }
 
+export const registerSendMail = (data) => async (dispatch) => {
+    const check = valid(data);
+    if (check.errLength > 0) {
+        return dispatch({ type: GLOBALTYPES.ALERT, payload: check.errMsg })
+    }
+
+    try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
+
+        const res = await postDataAPI('registersendmail', data)
+
+        dispatch({
+            type: GLOBALTYPES.ALERT,
+            payload: {
+                success: res.data.msg
+            }
+        })
+
+    } catch (err) {
+        dispatch({
+            type: GLOBALTYPES.ALERT,
+            payload: {
+                error: err.response.data.msg
+            }
+        })
+    }
+
+}
+
+
+
 export const register = (data) => async (dispatch) => {
     const check = valid(data);
     if (check.errLength > 0) {

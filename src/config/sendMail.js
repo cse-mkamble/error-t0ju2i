@@ -1,12 +1,14 @@
 const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
+const mailMessage = require('./MailMessage/mailMessage');
 
-const SENDER_EMAIL_ADDRESS = 'cse.mkamble@gmail.com';
+const MAILING_SERVICE = 'Gmail';
 const MAILING_SERVICE_CLIENT_ID = '798003545648-sd4asfja34bs1jsionjgoju776lki3pk.apps.googleusercontent.com'
 const MAILING_SERVICE_CLIENT_SECRET = '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'
 const MAILING_SERVICE_REDIRECT_URI = 'https://developers.google.com/oauthplayground'
 const MAILING_SERVICE_REFRESH_TOKEN = '1//04HAOYIOywPUTCgYIARAAGAQSNwF-L9IrDSibeA78Wj6ljMmKQjw2i9f5EHjihUUPIfpekCvpStgNArekgNNeRM6qXQse_N9XQpE'
 const MAILING_SERVICE_ACCESS_TOKEN = 'ya29.a0ARrdaM-JsYnUwr_tRISLnoR8OelKYwTEDFgQBXzhYhK1-exSFHNXBBYpcNEUIh79g78-Fa3LYsPg67CkrsdCCzI3GLwz5HOgyPc__aFqhlb9wz4Ru9Amh9H0k1gAoo1EXk4JOSC28Hnn-h_sZ62AM-ijKvZA'
+const MAILING_SERVICE_SENDER = 'cse.mkamble@gmail.com';
 
 const oAuth2Client = new google.auth.OAuth2(
     MAILING_SERVICE_CLIENT_ID,
@@ -14,16 +16,16 @@ const oAuth2Client = new google.auth.OAuth2(
     MAILING_SERVICE_REDIRECT_URI
 )
 
-oAuth2Client.setCredentials({ refresh_token: MAILING_SERVICE_REFRESH_TOKEN })
+oAuth2Client.setCredentials({ refresh_token: MAILING_SERVICE_REFRESH_TOKEN });
 
-async function sendMail() {
+async function sendMail(options) {
     try {
         const accessToken = await oAuth2Client.getAccessToken();
         const transporter = nodemailer.createTransport({
-            service: 'gmail',
+            service: MAILING_SERVICE,
             auth: {
                 type: 'OAuth2',
-                user: 'cse.mkamble@gmail.com',
+                user: MAILING_SERVICE_SENDER,
                 clientId: MAILING_SERVICE_CLIENT_ID,
                 clientSecret: MAILING_SERVICE_CLIENT_SECRET,
                 refreshToken: MAILING_SERVICE_REFRESH_TOKEN,
@@ -31,12 +33,13 @@ async function sendMail() {
             }
         });
 
+        const message = mailMessage(options.text);
+
         const mailOptions = {
-            from: 'Mayur <cse.mkamble@gmail.com>',
-            to: 'mmkamble2000@gmail.com',
-            subject: 'Test Mail',
-            text: 'hello from mail',
-            html: '<h1>hello</h1>'
+            from: process.env.APP_NAME + ' <' + MAILING_SERVICE_SENDER + '>',
+            to: options.to,
+            subject: options.subject,
+            html: message
         }
 
         await transporter.sendMail(mailOptions, function (err, info) {
@@ -52,7 +55,7 @@ async function sendMail() {
     }
 }
 
-sendMail();
+module.exports = sendMail;
 
 /**
  *
@@ -77,3 +80,4 @@ sendMail();
  *
  *
  */
+

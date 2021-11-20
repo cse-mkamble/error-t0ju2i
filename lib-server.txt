@@ -16,3 +16,4 @@ npm install socket.io --save
 npm install --save-dev nodemon
 
 npm install googleapis
+npm install otplib

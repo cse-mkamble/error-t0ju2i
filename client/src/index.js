@@ -3,41 +3,39 @@ import ReactDOM from 'react-dom';
 
 
 import './styles/global.css';
-import DataProvider from './redux/store'
+import DataProvider from './redux/store';
 
-import { useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import PageRender from './customRouter/PageRender'
-import PrivateRouter from './customRouter/PrivateRouter'
+import PageRender from './customRouter/PageRender';
+import PrivateRouter from './customRouter/PrivateRouter';
 
-import Home from './pages/home'
-import Login from './pages/login'
-import Register from './pages/register'
+import Home from './pages/home';
+import Login from './pages/login';
+import Register from './pages/authentication/Register';
 
-import ActivationEmail from './pages/ActivationEmail'
+import ActivationEmail from './pages/ActivationEmail';
 
-import ForgotPass from './pages/ForgotPassword'
-import ResetPass from './pages/ResetPassword'
+import ForgotPass from './pages/ForgotPassword';
+import ResetPass from './pages/ResetPassword';
 
-import Alert from './components/alert/Alert'
-import Header from './components/header/Header'
-import StatusModal from './components/StatusModal'
+import Alert from './components/alert/Alert';
+import Header from './components/header/Header';
+import StatusModal from './components/StatusModal';
 
-import { useSelector, useDispatch } from 'react-redux'
-import { refreshToken } from './redux/actions/authAction'
-import { getPosts } from './redux/actions/postAction'
-import { getSuggestions } from './redux/actions/suggestionsAction'
+import { useSelector, useDispatch } from 'react-redux';
+import { refreshToken } from './redux/actions/authAction';
+import { getPosts } from './redux/actions/postAction';
+import { getSuggestions } from './redux/actions/suggestionsAction';
 
-import io from 'socket.io-client'
-import { GLOBALTYPES } from './redux/actions/globalTypes'
-import SocketClient from './SocketClient'
+import io from 'socket.io-client';
+import { GLOBALTYPES } from './redux/actions/globalTypes';
+import SocketClient from './SocketClient';
 
-import { getNotifies } from './redux/actions/notifyAction'
-import CallModal from './components/message/CallModal'
-import Peer from 'peerjs'
-
-
+import { getNotifies } from './redux/actions/notifyAction';
+import CallModal from './components/message/CallModal';
+import Peer from 'peerjs';
 
 function MainRoute() {
   const { auth, status, modal, call } = useSelector(state => state)
