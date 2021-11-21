@@ -86,7 +86,7 @@ class SingleOtpInput extends PureComponent {
                         }`}
                     autoComplete="off"
                     style={Object.assign(
-                        { width: '2em', textAlign: 'center' },
+                        { width: '3em', height: '3em', textAlign: 'center', borderRadius: '5px' },
                         isStyleObject(inputStyle) && inputStyle,
                         focus && isStyleObject(focusStyle) && focusStyle,
                         isDisabled && isStyleObject(disabledStyle) && disabledStyle,

@@ -21,7 +21,8 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormLabel from '@mui/material/FormLabel';
 
-import { registerSendMail } from '../../../redux/actions/authAction';
+// import { registerSendMail } from '../../../redux/actions/authAction';
+import { registerSendMail } from '../redux/actions/authAction';
 
 function Copyright(props) {
     return (

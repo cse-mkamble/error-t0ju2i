@@ -12,7 +12,7 @@ import PageRender from './customRouter/PageRender';
 import PrivateRouter from './customRouter/PrivateRouter';
 
 import Home from './pages/home';
-import Login from './pages/login';
+import Login from './pages/authentication/Login';
 import Register from './pages/authentication/Register';
 
 import ActivationEmail from './pages/ActivationEmail';

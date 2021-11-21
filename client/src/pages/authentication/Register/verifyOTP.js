@@ -1,69 +1,60 @@
-import React, { useState } from "react";
-import { Button, Grid, Box, Container } from "@mui/material";
+import React from 'react';
+import { useState } from "react";
+
+import { Button, Grid, Box, Container, FormLabel, Typography, Alert, TextField } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import OtpInput from "../../../components/UI/react-otp-input";
 
-const VerifyOTP = (props) => {
+import OtpInput from "../../../components/UI/OTPInput";
 
-    AOS.init({});
+export default function VerifyOTP(props) {
 
-    const [OTPVal, setOTPVal] = useState('');
-
-    const handleOTPSubmit = (event) => {
-        event.preventDefault();
-        if (props.state.OTP && props.state.OTP.length === 6) {
-            props.handleSubmitVerifyOTP();
-        } else {
-            props.handleAddErrorMessages([{ msg: "The OTP you entered is invalid. Please enter the correct OTP." }]);
-        }
-    };
+    const [otp, setOTP] = useState('');
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center' }} >
-            <div data-aos="fade-left">
-                <div style={{ textAlign: 'center' }} >
-                    <Container>
-                        <h4>Please Enter the OTP to Verify your Account</h4>
-                        <div>A OTP (one time Password) has been sent to mail</div>
-                        <Box component="form" onSubmit={handleOTPSubmit} sx={{ mt: 2 }}>
-                            <Grid container spacing={3}>
-                                <Grid item xs={12}>
-                                    <div style={{ display: 'flex', justifyContent: 'center', fontSize: '26px' }}>
-                                        <OtpInput
-                                            value={props.state.OTP}
-                                            onChange={(otp) => props.handleSelectInputChange('OTP', otp)}
-                                            numInputs={6}
-                                            separator={<div style={{ margin: '0 10px' }}></div>}
-                                        />
-                                    </div>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Button
-                                        type="submit"
-                                        variant="contained"
-                                    >Validate OTP</Button>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Button
-                                        color="primary"
-                                        endIcon={<SendIcon />}
-                                        onClick={() => props.handleSubmitSendMail()}
-                                    >Resend OTP</Button>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                        <Grid item xs={12}>
-                            <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                                <Button variant="contained" onClick={props.handleBack} >Back</Button>
-                            </Box>
-                        </Grid>
-                    </Container>
-                </div>
-            </div>
-        </div>
+        <Container sx={{ mt: 2 }}>
+            <Alert severity="success">A OTP ( One Time Password ) has been sent to your mail.</Alert>
+            <Box component="form" noValidate onSubmit={props.handleSubmit} sx={{ mt: 3 }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <FormLabel component="legend" align="center">Please Enter the OTP to verify your account.</FormLabel>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <div style={{ display: 'flex', justifyContent: 'center', fontSize: '26px' }}>
+                            <OtpInput
+                                value={otp}
+                                onChange={(otp) => setOTP(otp)}
+                                numInputs={6}
+                                separator={<div style={{ margin: '0 5px' }}></div>}
+                            />
+                        </div>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Register Now
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Box>
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    <Button
+                        color="primary"
+                        onClick={() => props.handleBack()}
+                    >Back</Button>
+                </Grid>
+                <Grid item xs={6}>
+                    <Button
+                        color="primary"
+                        endIcon={<SendIcon />}
+                        onClick={() => props.handleResendSentMail()}
+                    >Resend OTP</Button>
+                </Grid>
+            </Grid>
+        </Container>
     );
-};
-
-export default VerifyOTP;
+}

@@ -12,7 +12,7 @@ const Toast = ({ msg, handleShow, severityType }) => {
     React.useEffect(() => {
         setTimeout(() => {
             setOpen(false);
-        }, 5000);
+        }, 10000);
     }, [open]);
 
     return (
