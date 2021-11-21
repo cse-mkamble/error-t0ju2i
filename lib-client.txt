@@ -17,6 +17,7 @@ npm install redux-thunk
 npm install socket.io-client
 npm install use-state-if-mounted
 npm install react-scripts
+npm install --save aos 
 
 # Install MUI, the world's most popular React UI framework.
 

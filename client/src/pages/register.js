@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -20,7 +21,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormLabel from '@mui/material/FormLabel';
 
-import { register } from '../redux/actions/authAction';
+import { registerSendMail } from '../../../redux/actions/authAction';
 
 function Copyright(props) {
     return (
@@ -65,7 +66,7 @@ export default function Register() {
     const handleSubmit = e => {
         e.preventDefault();
         // console.log(userData)
-        dispatch(register(userData));
+        dispatch(registerSendMail(userData));
     }
 
 
