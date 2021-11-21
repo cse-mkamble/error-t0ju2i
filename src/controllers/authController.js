@@ -43,53 +43,32 @@ const authController = {
 
     },
 
-    register: async (req, res) => {
+    register: async (request, response) => {
         try {
-            const { fullname, username, email, password, gender } = req.body
-            if (!validateEmail(email)) return res.status(400).json({ msg: "Invalid emails." })
-            let newUserName = username.toLowerCase().replace(/ /g, '')
-            const user_name = await Users.findOne({ username: newUserName })
-            if (user_name) return res.status(400).json({ msg: "This user name already exists." })
-            const user_email = await Users.findOne({ email })
-            if (user_email) return res.status(400).json({ msg: "This email already exists." })
-            if (password.length < 6) return res.status(400).json({ msg: "Password must be at least 6 characters." })
-            const passwordHash = await bcrypt.hash(password, 12)
-            const newUser = { fullname, username: newUserName, email, password: passwordHash, gender }
-            const activation_token = createActivationToken(newUser)
-            const url = `${CLIENT_URL}/user/activation/${activation_token}`
-            const txt = 'Confirm verification your email address'
-            const emaillMessageButtonName = 'Verify your email'
-            const message = `
-                <div style=" color: #323232; " >
-                    <div style=" max-width: 600px; margin:auto; font-size: 110%; background: #eaeaea87; padding: 10px; ">
-                        <div style=" text-align: center; ">
-                            <img style=" width: 64px; height: 64px; margin: 10px 0 20px 0; " src=${ICON_IMAGE} />
-                        </div>
-                        <div style=" padding: 40px; background: #fff; border-radius: 10px; ">
-                            <h2 style="text-align: center; ">Welcome to ReachMe.</h2>
-                            <p>Congratulations! You're almost set to start using ReachMe Application.
-                                Just click the button below to validate your email address.
-                            </p>
-                            <div style=" text-align: center; ">
-                                <a href=${url} style="background: #2196f3; border-radius: 4px; text-decoration: none; color: rgb(255, 255, 255); padding: 10px 30px; display: inline-block;">${emaillMessageButtonName}</a>
-                            </div>
-                            <p>If the button doesn't work for any reason, you can also click on the link below:</p>
-                            <div>${url}</div>
-                            <p>Note: You must perform this validation within the next 24 hours to keep your new account enabled.</p>
-                        </div>
-                        <div style=" color: rgb(165, 164, 164); text-align: left; margin: 20px auto; " >
-                            <p style=" font-size: 12px; margin: 10px 20px; " >ReachMe is the social networking platforms for rapid scaling of multi-platform applications.</p>
-                            <p style=" font-size: 12px; margin: 10px 20px; " >If you encounter any problem, please contact us at cse.mkamble@gmail.com .</p>
-                        </div>
-                    </div>
-                </div>
-            `
-            sendMail({ to: email, subject: txt, text: message })
-            res.json({ msg: "Please activate your email to start." })
+            const { fullname, username, email, password, gender, otp } = request.body;
+            if (!(otp.length > 0 && otp.length === 6)) return response.status(400).json({ msg: "Please Enter the OTP to verify your account." });
+            try {
+                const isValid = otplibAuthenticator.verify({ token: otp, secret: email });
+                if (!isValid) return response.status(400).json({ msg: "Invalid OTP. Please check OTP and try again." });
+                const passwordHash = await bcrypt.hash(password, 12)
+                const newUser = new Users({ fullname, username, email, password: passwordHash, gender })
+                const access_token = createAccessToken({ id: newUser._id })
+                const refresh_token = createRefreshToken({ id: newUser._id })
+                response.cookie('refreshtoken', refresh_token, {
+                    httpOnly: true,
+                    path: '/api/refresh_token',
+                    maxAge: 30 * 24 * 60 * 60 * 1000 // 30days
+                })
+                await newUser.save()
+                response.json({ msg: 'OTP Verifed Successfully. Your account has been created successfully.', access_token, user: { ...newUser._doc, password: '' } });
+            } catch (error) {
+                return response.status(400).json({ msg: "Internal server error" });
+            }
         } catch (err) {
-            return res.status(500).json({ msg: err.message })
+            return response.status(500).json({ msg: err.message })
         }
     },
+
     activateEmail: async (req, res) => {
         try {
             const { activation_token } = req.body

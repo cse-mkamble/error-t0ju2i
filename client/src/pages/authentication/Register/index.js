@@ -17,13 +17,17 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 
 import SendIcon from '@mui/icons-material/Send';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
-import { registerSendMail } from '../../../redux/actions/authAction';
+import { registerSendMail, register } from '../../../redux/actions/authAction';
 
 import OtpInput from '../../../components/UI/OTPInput';
 
 import RegisterForm from './RegisterForm';
 import VerifyOTP from './VerifyOTP';
+
+import { GLOBALTYPES } from '../../../redux/actions/globalTypes';
+import Toast from '../../../components/alert/Toast';
 
 function Copyright(props) {
     return (
@@ -79,7 +83,7 @@ export default function Register() {
     const handleOTPFormSubmit = e => {
         e.preventDefault();
         console.log(userData);
-        // dispatch(registerSendMail(userData));
+        dispatch(register(userData));
     }
 
     const handleNext = () => {
@@ -263,7 +267,7 @@ export default function Register() {
                                     <Grid item xs={12} sx={{ mt: 4 }}>
                                         <Button
                                             color="primary"
-                                            endIcon={<SendIcon />}
+                                            startIcon={<SendIcon />}
                                             onClick={(e) => handleRegisterFormSubmit(e)}
                                         >Resend OTP</Button>
                                     </Grid>
