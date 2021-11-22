@@ -37,6 +37,7 @@ export default function Login() {
     const { email, password } = userData;
 
     const [ForgotPassFormShow, setForgotPassFormShow] = useState(false);
+    const [NewPassFormShow, setNewPassFormShow] = useState(false);
 
     const { auth } = useSelector(state => state);
     const dispatch = useDispatch();
@@ -96,20 +97,25 @@ export default function Login() {
                         </div>
                     </div>
 
-                    {ForgotPassFormShow ?
-                        <ForgotPassForm
-                            handleSentMail={handleSubmitSentMail}
-                            userData={userData}
-                            handleVerifyOTP={handleVerifyOTP}
-                            handleChangeSelectInput={handleChangeSelectInput}
-                        />
-                        :
-                        <LoginForm
-                            handleSubmitLogin={handleSubmitLogin}
-                            userData={userData}
-                            handleChangeInput={handleChangeInput}
-                            setForgotPassFormShow={setForgotPassFormShow}
-                        />
+                    {NewPassFormShow ? '' : (
+                        <div>
+                            {ForgotPassFormShow ?
+                                <ForgotPassForm
+                                    handleSentMail={handleSubmitSentMail}
+                                    userData={userData}
+                                    handleVerifyOTP={handleVerifyOTP}
+                                    handleChangeSelectInput={handleChangeSelectInput}
+                                />
+                                :
+                                <LoginForm
+                                    handleSubmitLogin={handleSubmitLogin}
+                                    userData={userData}
+                                    handleChangeInput={handleChangeInput}
+                                    setForgotPassFormShow={setForgotPassFormShow}
+                                />
+                            }
+                        </div>
+                    )
                     }
 
                 </Box>

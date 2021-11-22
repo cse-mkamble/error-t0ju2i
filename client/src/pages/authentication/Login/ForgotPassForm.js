@@ -1,6 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Box, TextField, Button, FormControlLabel, Checkbox, Grid, Link } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { Box, TextField, Button, Container, FormLabel, Checkbox, Grid, Link, Typography } from '@mui/material';
+
+import SendIcon from '@mui/icons-material/Send';
 
 import { InputAdornment, IconButton } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
@@ -10,12 +13,17 @@ import OtpInput from "../../../components/UI/OTPInput";
 
 export default function ForgotPassForm(props) {
 
+    const { auth, alert } = useSelector(state => state);
+
     const [sentMail, setSentMail] = useState(false);
     const [OTPInputShow, setOTPInputShow] = useState(false);
 
     return (
         <React.Fragment>
-            <Box component="form" noValidate sx={{ mt: 1 }}>
+            <Typography component="h1" variant="h5" sx={{ mt: 3 }}>
+                <div style={{ width: '100%' }} >Forgot Password</div>
+            </Typography>
+            <Box component="form" onSubmit={props.handleSentMail} noValidate sx={{ mt: 3 }}>
                 <TextField
                     margin="normal"
                     required
@@ -30,13 +38,14 @@ export default function ForgotPassForm(props) {
                 />
 
                 <Button
+                    fullWidth
                     color="primary"
-                    sx={{ mt: 2, mb: 2 }}
+                    sx={{ mt: 1, mb: 2 }}
                     startIcon={<SendIcon />}
                     disabled={props.userData.email ? false : true}
                     onClick={(e) => {
                         props.handleSentMail(e);
-                        setSentMail(false);
+                        setSentMail(true);
                         setOTPInputShow(true);
                     }}
                 >{sentMail ? 'Resend OTP' : 'Send OTP'}</Button>
@@ -60,7 +69,7 @@ export default function ForgotPassForm(props) {
                                             />
                                         </div>
                                     </Grid>
-                                    <Grid item xs={12}>
+                                    <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }} >
                                         <Button
                                             type="submit"
                                             variant="contained"
