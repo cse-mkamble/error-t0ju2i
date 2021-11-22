@@ -7,6 +7,7 @@ const sendMail = require('../config/sendMail');
 
 const { otplibAuthenticator } = require("../config/otplib");
 const OTPMailMessage = require("../config/MailMessage/OTPMail");
+const AcoountCreateSuccessMessage = require("../config/MailMessage/AcoountCreateSuccess");
 
 const { CLIENT_URL, ICON_IMAGE } = process.env;
 
@@ -61,6 +62,11 @@ const authController = {
                 })
                 await newUser.save()
                 response.json({ msg: 'OTP Verifed Successfully. Your account has been created successfully.', access_token, user: { ...newUser._doc, password: '' } });
+
+                const subject = `OTP Verifed Successfully.`;
+                const message = AcoountCreateSuccessMessage();
+                sendMail({ to: email, subject: subject, text: message });
+                
             } catch (error) {
                 return response.status(400).json({ msg: "Internal server error" });
             }

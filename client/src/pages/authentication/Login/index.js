@@ -1,27 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
-import { Link as LinkRouter, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { InputAdornment, IconButton } from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
 import { login } from '../../../redux/actions/authAction';
+
+import LoginForm from './LoginForm';
+import ForgotPassForm from './ForgotPassForm';
 
 function Copyright(props) {
     return (
@@ -40,37 +32,45 @@ const theme = createTheme();
 
 export default function Login() {
 
-    const initialState = { email: '', password: '' }
-    const [userData, setUserData] = useState(initialState)
-    const { email, password } = userData
+    const initialState = { email: '', password: '', otp: '' };
+    const [userData, setUserData] = useState(initialState);
+    const { email, password } = userData;
 
-    const [typePass, setTypePass] = useState(false);
-    const [rememberMe, setRememberMe] = useState(false);
+    const [ForgotPassFormShow, setForgotPassFormShow] = useState(false);
 
-    const [showPassword, setShowPassword] = useState(false);
-    const handleClickShowPassword = () => setShowPassword(!showPassword);
-    const handleMouseDownPassword = () => setShowPassword(!showPassword);
-
-
-    const { auth } = useSelector(state => state)
-    const dispatch = useDispatch()
-    const history = useHistory()
+    const { auth } = useSelector(state => state);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
-        if (auth.token) history.push("/")
-    }, [auth.token, history])
+        if (auth.token) history.push("/");
+    }, [auth.token, history]);
 
     const handleChangeInput = e => {
-        const { name, value } = e.target
-        setUserData({ ...userData, [name]: value })
+        const { name, value } = e.target;
+        setUserData({ ...userData, [name]: value });
     }
 
-    const handleSubmit = e => {
+    const handleChangeSelectInput = (name, value) => {
+        setUserData({ ...userData, [name]: value });
+    };
+
+    const handleSubmitLogin = e => {
         e.preventDefault();
-        console.log(userData);
         dispatch(login(userData));
     }
 
+    const handleSubmitSentMail = e => {
+        e.preventDefault();
+
+        // dispatch(login(userData));
+    }
+
+    const handleVerifyOTP = e => {
+        e.preventDefault();
+
+        // dispatch(login(userData));
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -96,86 +96,22 @@ export default function Login() {
                         </div>
                     </div>
 
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                            onChange={handleChangeInput}
-                            value={email}
+                    {ForgotPassFormShow ?
+                        <ForgotPassForm
+                            handleSentMail={handleSubmitSentMail}
+                            userData={userData}
+                            handleVerifyOTP={handleVerifyOTP}
+                            handleChangeSelectInput={handleChangeSelectInput}
                         />
-
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type={showPassword ? "text" : "password"}
-                            id="password"
-                            autoComplete="current-password"
-                            onChange={handleChangeInput}
-                            value={password}
-                            InputProps={{ // <-- This is where the toggle button is added.
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                        >
-                                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                )
-                            }}
+                        :
+                        <LoginForm
+                            handleSubmitLogin={handleSubmitLogin}
+                            userData={userData}
+                            handleChangeInput={handleChangeInput}
+                            setForgotPassFormShow={setForgotPassFormShow}
                         />
+                    }
 
-                        <Grid container justifyContent="flex-end">
-                            <Grid item>
-                                <Link href="/forgot_password" variant="body2">
-                                    Forgot password
-                                </Link>
-                            </Grid>
-                        </Grid>
-
-                        <FormControlLabel
-                            control={<Checkbox
-                                value={rememberMe}
-                                color="primary"
-                                onClick={((event) => {
-                                    if (rememberMe) {
-                                        setRememberMe(false)
-                                    } else {
-                                        setRememberMe(true)
-                                    }
-                                })}
-                            />}
-                            label="Remember Me"
-                        />
-
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            disabled={email && password ? false : true}
-                        >
-                            Login
-                        </Button>
-                        <Grid container justifyContent="center" >
-                            <Grid item>
-                                <Link href="/register" variant="body2">
-                                    {"Don't have an account? Register Now"}
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </Box>
                 </Box>
                 <Copyright sx={{ mt: 10 }} />
             </Container>

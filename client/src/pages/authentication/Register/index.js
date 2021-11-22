@@ -120,162 +120,21 @@ export default function Register() {
 
                     <React.Fragment>
                         {activeStep === 0 ? (
-                            <React.Fragment>
-                                <Box component="form" noValidate onSubmit={handleRegisterFormSubmit} sx={{ mt: 3 }}>
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                error={alert.fullname ? true : false}
-                                                helperText={alert.fullname ? alert.fullname : ''}
-                                                autoComplete="given-full-name"
-                                                name="fullname"
-                                                required
-                                                fullWidth
-                                                id="fullname"
-                                                label="Full Name"
-                                                value={userData.fullname}
-                                                autoFocus
-                                                onChange={handleChangeInput}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                error={alert.username ? true : false}
-                                                helperText={alert.username ? alert.username : ''}
-                                                required
-                                                fullWidth
-                                                id="username"
-                                                label="username"
-                                                name="username"
-                                                value={userData.username}
-                                                autoComplete="user-name"
-                                                onChange={handleChangeInput}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <div style={{ padding: '10px', border: '1px solid #c4c4c4', borderRadius: '5px' }}>
-                                                <FormLabel component="legend">Gender</FormLabel>
-                                                <RadioGroup required style={{ justifyContent: 'space-between' }}
-                                                    fullWidth row aria-label="gender" defaultValue={userData.gender} name="gender" onChange={handleChangeInput} >
-                                                    <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                                    <FormControlLabel value="male" control={<Radio />} label="Male" />
-                                                    <FormControlLabel value="other" control={<Radio />} label="Other" />
-                                                </RadioGroup>
-                                            </div>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                error={alert.email ? true : false}
-                                                helperText={alert.email ? alert.email : ''}
-                                                required
-                                                fullWidth
-                                                id="email"
-                                                label="Email Address"
-                                                name="email"
-                                                value={userData.email}
-                                                autoComplete="email"
-                                                onChange={handleChangeInput}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                error={alert.password ? true : false}
-                                                helperText={alert.password ? alert.password : ''}
-                                                required
-                                                fullWidth
-                                                name="password"
-                                                label="Password"
-                                                type={show_password}
-                                                id="password"
-                                                value={userData.password}
-                                                autoComplete="new-password"
-                                                onChange={handleChangeInput}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                error={alert.cf_password ? true : false}
-                                                helperText={alert.cf_password ? alert.cf_password : ''}
-                                                required
-                                                fullWidth
-                                                name="cf_password"
-                                                label="Confirm Password"
-                                                type={show_password}
-                                                id="cf_password"
-                                                value={userData.cf_password}
-                                                autoComplete="new-confirm_password"
-                                                onChange={handleChangeInput}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <FormControlLabel
-                                                control={<Checkbox value={show_password} color="primary" onClick={(event => { if (show_password === 'password') { setShowPassword('text') } else { setShowPassword('password') } })} />}
-                                                label="Show Password"
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        variant="contained"
-                                        sx={{ mt: 3, mb: 2 }}
-                                    >
-                                        Sumbit
-                                    </Button>
-                                    <Grid container justifyContent="center">
-                                        <Grid item>
-                                            <Link href="/" variant="body2">
-                                                Already have an account? Login Now
-                                            </Link>
-                                        </Grid>
-                                    </Grid>
-                                </Box>
-                                {alert.success ? handleNext() : ''}
-                            </React.Fragment>
+                            <RegisterForm
+                                handleNext={handleNext}
+                                handleChangeInput={handleChangeInput}
+                                userData={userData}
+                                handleRegisterFormSubmit={handleRegisterFormSubmit}
+                            />
                         ) : (
-                            <React.Fragment>
-                                <Container sx={{ mt: 2 }}>
-                                    <Alert severity="success">A OTP ( One Time Password ) has been sent to your mail.</Alert>
-                                    <Box component="form" noValidate onSubmit={handleOTPFormSubmit} sx={{ mt: 3 }}>
-                                        <Grid container spacing={2}>
-                                            <Grid item xs={12}>
-                                                <FormLabel component="legend" align="center">Please Enter the OTP to verify your account.</FormLabel>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <div style={{ display: 'flex', justifyContent: 'center', fontSize: '32px' }}>
-                                                    <OtpInput
-                                                        value={userData.otp}
-                                                        name='otp'
-                                                        onChange={(otp) => handleChangeSelectInput('otp', otp)}
-                                                        numInputs={6}
-                                                        separator={<div style={{ margin: '0 5px' }}></div>}
-                                                    />
-                                                </div>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <Button
-                                                    type="submit"
-                                                    fullWidth
-                                                    variant="contained"
-                                                    sx={{ mt: 3, mb: 2 }}
-                                                >
-                                                    Register Now
-                                                </Button>
-                                            </Grid>
-                                        </Grid>
-                                    </Box>
-                                    <Grid item xs={12} sx={{ mt: 4 }}>
-                                        <Button
-                                            color="primary"
-                                            startIcon={<SendIcon />}
-                                            onClick={(e) => handleRegisterFormSubmit(e)}
-                                        >Resend OTP</Button>
-                                    </Grid>
-                                </Container>
-                            </React.Fragment>
+                            <VerifyOTP
+                                handleOTPFormSubmit={handleOTPFormSubmit}
+                                userData={userData}
+                                handleChangeSelectInput={handleChangeSelectInput}
+                                handleRegisterFormSubmit={handleRegisterFormSubmit}
+                            />
                         )}
                     </React.Fragment>
-
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 2 }} />
             </Container>
