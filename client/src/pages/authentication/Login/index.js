@@ -32,7 +32,7 @@ const theme = createTheme();
 
 export default function Login() {
 
-    const initialState = { email: '', password: '', otp: '' };
+    const initialState = { email: '', password: '', otp: '', newPassword: '', new_cf_password: '' };
     const [userData, setUserData] = useState(initialState);
     const { email, password } = userData;
 

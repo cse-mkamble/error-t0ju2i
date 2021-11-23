@@ -2,6 +2,7 @@ import { GLOBALTYPES } from './globalTypes'
 import { postDataAPI } from '../../utils/fetchData'
 import valid from '../../utils/valid'
 import axios from 'axios'
+import validator from 'validator';
 
 export const login = (data) => async (dispatch) => {
     try {
@@ -125,6 +126,45 @@ export const forgotPassOTPVerify = (data) => async (dispatch) => {
         dispatch({ type: GLOBALTYPES.FVPASS, payload: { otpVeriySuccess: false } });
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.msg } });
     }
+}
+
+export const ResetPassword = (data) => async (dispatch) => {
+    const { newPassword, new_cf_password } = data;
+    const errMsg = {};
+
+    if (!newPassword) {
+        errMsg.newPassword = "Please add your password."
+    } else if (!validator.isStrongPassword(newPassword, {
+        minLength: 8, minLowercase: 1,
+        minUppercase: 1, minNumbers: 1, minSymbols: 1
+    })) {
+        errMsg.newPassword = "Please choose a stronger password. Try a mix of letters, numbers and symbols."
+    }
+
+    if (!new_cf_password) {
+        errMsg.new_cf_password = "Please enter confirm password."
+    }
+
+    if (newPassword !== new_cf_password) {
+        errMsg.new_cf_password = "Confirm password did not match."
+    }
+
+    const errLength = Object.keys(err).length;
+
+    if (errLength > 0) {
+        return dispatch({ type: GLOBALTYPES.ALERT, payload: errMsg })
+    }
+
+
+    // try {
+    //     dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+    //     const res = await postDataAPI('forgototpverify', data);
+    //     dispatch({ type: GLOBALTYPES.FVPASS, payload: { otpVeriySuccess: true } });
+    //     dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.msg } });
+    // } catch (err) {
+    //     dispatch({ type: GLOBALTYPES.FVPASS, payload: { otpVeriySuccess: false } });
+    //     dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.msg } });
+    // }
 }
 
 export const activationEmail = (activation_token) => async (dispatch) => {
