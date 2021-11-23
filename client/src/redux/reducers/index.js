@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import auth from './authReducer'
+import fpass from './forgotPassReducer'
 import alert from './alertReducer'
 import theme from './themeReducer'
 import profile from './profileReducer'
@@ -19,6 +20,7 @@ import peer from './peerReducer'
 
 export default combineReducers({
     auth,
+    fpass,
     alert,
     theme,
     profile,

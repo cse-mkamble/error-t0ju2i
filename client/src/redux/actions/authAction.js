@@ -103,6 +103,30 @@ export const register = (data) => async (dispatch) => {
     }
 }
 
+export const forgotPassOTPSendMail = (data) => async (dispatch) => {
+    try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+        const res = await postDataAPI('forgotsendmail', data);
+        dispatch({ type: GLOBALTYPES.FSPASS, payload: { success: true } });
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.msg } });
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.FSPASS, payload: { success: false } });
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.msg } });
+    }
+}
+
+export const forgotPassOTPVerify = (data) => async (dispatch) => {
+    try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+        const res = await postDataAPI('forgototpverify', data);
+        dispatch({ type: GLOBALTYPES.FVPASS, payload: { otpVeriySuccess: true } });
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.msg } });
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.FVPASS, payload: { otpVeriySuccess: false } });
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.msg } });
+    }
+}
+
 export const activationEmail = (activation_token) => async (dispatch) => {
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })

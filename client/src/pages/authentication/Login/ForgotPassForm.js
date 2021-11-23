@@ -13,7 +13,7 @@ import OtpInput from "../../../components/UI/OTPInput";
 
 export default function ForgotPassForm(props) {
 
-    const { auth, alert } = useSelector(state => state);
+    const { auth, alert, fpass } = useSelector(state => state);
 
     const [sentMail, setSentMail] = useState(false);
     const [OTPInputShow, setOTPInputShow] = useState(false);
@@ -23,7 +23,7 @@ export default function ForgotPassForm(props) {
             <Typography component="h1" variant="h5" sx={{ mt: 3 }}>
                 <div style={{ width: '100%' }} >Forgot Password</div>
             </Typography>
-            <Box component="form" onSubmit={props.handleSentMail} noValidate sx={{ mt: 3 }}>
+            <Box component="form" noValidate sx={{ mt: 3 }}>
                 <TextField
                     margin="normal"
                     required
@@ -45,15 +45,13 @@ export default function ForgotPassForm(props) {
                     disabled={props.userData.email ? false : true}
                     onClick={(e) => {
                         props.handleSentMail(e);
-                        setSentMail(true);
-                        setOTPInputShow(true);
                     }}
                 >{sentMail ? 'Resend OTP' : 'Send OTP'}</Button>
 
-                {OTPInputShow ?
+                {fpass.success ?
                     <React.Fragment>
                         <Container sx={{ mt: 2 }}>
-                            <Box component="form" noValidate onSubmit={props.handleVerifyOTP} sx={{ mt: 2 }}>
+                            <Box component="form" sx={{ mt: 2 }}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
                                         <FormLabel component="legend" align="center">Please Enter the OTP to verify your account.</FormLabel>
@@ -71,9 +69,11 @@ export default function ForgotPassForm(props) {
                                     </Grid>
                                     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }} >
                                         <Button
-                                            type="submit"
                                             variant="contained"
                                             sx={{ mt: 2, mb: 2 }}
+                                            onClick={(e) => {
+                                                props.handleSubmitVerifyOTP(e);
+                                            }}
                                         >
                                             Verify OTP
                                         </Button>
@@ -84,6 +84,8 @@ export default function ForgotPassForm(props) {
                     </React.Fragment>
                     : ''
                 }
+
+                {fpass.otpVeriySuccess ? props.setActiveFormShow('ResetPassForm') : ''}
 
             </Box>
         </React.Fragment>

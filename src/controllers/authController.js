@@ -7,6 +7,7 @@ const sendMail = require('../config/sendMail');
 
 const { otplibAuthenticator } = require("../config/otplib");
 const OTPMailMessage = require("../config/MailMessage/OTPMail");
+const ForgotPassOTPMail = require("../config/MailMessage/ForgotPassOTPMail");
 const AcoountCreateSuccessMessage = require("../config/MailMessage/AcoountCreateSuccess");
 
 const { CLIENT_URL, ICON_IMAGE } = process.env;
@@ -66,7 +67,7 @@ const authController = {
                 const subject = `OTP Verifed Successfully.`;
                 const message = AcoountCreateSuccessMessage();
                 sendMail({ to: email, subject: subject, text: message });
-                
+
             } catch (error) {
                 return response.status(400).json({ msg: "Internal server error" });
             }
@@ -115,27 +116,22 @@ const authController = {
             return res.status(500).json({ msg: err.message })
         }
     },
+
     login: async (req, res) => {
         try {
             const { email, password } = req.body
-
             const user = await Users.findOne({ email })
                 .populate("followers following", "avatar username fullname followers following")
-
             if (!user) return res.status(400).json({ msg: "This email does not exist." })
-
             const isMatch = await bcrypt.compare(password, user.password)
             if (!isMatch) return res.status(400).json({ msg: "Password is incorrect." })
-
             const access_token = createAccessToken({ id: user._id })
             const refresh_token = createRefreshToken({ id: user._id })
-
             res.cookie('refreshtoken', refresh_token, {
                 httpOnly: true,
                 path: '/api/refresh_token',
                 maxAge: 30 * 24 * 60 * 60 * 1000 // 30days
             })
-
             res.json({
                 msg: 'Login Success!',
                 access_token,
@@ -148,6 +144,86 @@ const authController = {
             return res.status(500).json({ msg: err.message })
         }
     },
+
+    forgotPassSendMail: async (request, response) => {
+        try {
+            const { email } = request.body;
+            const user = await Users.findOne({ email });
+            if (!user) return response.status(400).json({ msg: "This email does not exist." });
+            const otp = otplibAuthenticator.generate(email);
+            const subject = `Forgot Password OTP : ${otp}`;
+            const message = ForgotPassOTPMail(otp);
+            try {
+                sendMail({ to: email, subject: subject, text: message });
+                return response.json({ msg: "OTP sent to your email. Please check your email." });
+            } catch (error) {
+                return response.status(500).json({ msg: "Send OTP has error." });
+            }
+        } catch (error) {
+            console.log(error);
+            return response.status(500).json({ msg: "Internal Server Error." });
+        }
+    },
+
+    forgotPassOTPVerify: async (request, response) => {
+        try {
+            const { email, otp } = request.body;
+            if (!(otp.length > 0 && otp.length === 6)) return response.status(400).json({ msg: "Please Enter the OTP to verify your account." });
+            try {
+                const isValid = otplibAuthenticator.verify({ token: otp, secret: email });
+                if (!isValid) return response.status(400).json({ msg: "Invalid OTP. Please check OTP and try again." });
+                return response.json({ msg: "Forgot Password OTP Verifed Successfully. Now, you to create new password." });
+            } catch (error) {
+                console.log(error);
+                return response.status(400).json({ msg: "Internal server error" });
+            }
+        } catch (error) {
+            console.log(error);
+            return response.status(500).json({ msg: "Internal Server Error." });
+        }
+    },
+
+    resetPassword: async (request, response) => {
+        try {
+            const { email, newPassword } = request.body;
+            const user = await Users.findOne({ email });
+            if (!user) return response.status(400).json({ msg: "This email does not exist." });
+            const passwordHash = await bcrypt.hash(newPassword, 12);
+            await Users.findOneAndUpdate({ _id: user._id }, { password: passwordHash });
+
+            const subject = `Password Successfully Changed.`;
+            const message = `
+                <div style=" text-align: center; padding: 40px; background: #fff; border-radius: 10px; ">
+                    <img style=" width: 100px; height: 100px; margin: auto; "
+                        src="https://res.cloudinary.com/mayurkamble/image/upload/v1625314150/icon/green_check_mark_icon_flat_yzusy1.png" />
+                    <h2 style=" margin: 0; ">Thank you</h2>
+                    <p style=" color: rgb(165, 164, 164); margin: 5px; ">You have successfully changed your password.</p>
+                </div>
+            `;
+            sendMail({ to: email, subject: subject, text: message });
+
+            return response.json({ msg: "Password successfully changed." })
+        } catch (error) {
+            console.log(error);
+            return response.status(500).json({ msg: "Internal Server Error." });
+        }
+    },
+
+    createNewPassword: async (request, response) => {
+        try {
+            const { email, newPassword } = request.body;
+            const user = await Users.findOne({ email });
+            if (!user) return response.status(400).json({ msg: "This email does not exist." });
+            const passwordHash = await bcrypt.hash(password, 12)
+            const newUser = new Users({ fullname, username, email, password: passwordHash, gender })
+
+
+        } catch (error) {
+            console.log(error);
+            return response.status(500).json({ msg: "Internal Server Error." });
+        }
+    },
+
     forgotPassword: async (req, res) => {
         try {
             const { email } = req.body
@@ -191,41 +267,7 @@ const authController = {
             return res.status(500).json({ msg: err.message })
         }
     },
-    resetPassword: async (req, res) => {
-        try {
-            const { password } = req.body
-            // console.log(req.user)
-            const passwordHash = await bcrypt.hash(password, 12)
 
-            await Users.findOneAndUpdate({ _id: req.user.id }, {
-                password: passwordHash
-            })
-
-            const url = `${CLIENT_URL}/`
-            const txt = 'Password Successfully changed'
-            const emaillMessageButtonName = 'CONTINUE'
-            const message = `
-                <div style=" color: #323232; " >
-                    <div style=" max-width: 600px; margin:auto; font-size: 110%; text-align: center; background: #eaeaea87; padding: 10px; ">
-                        <div style=" text-align: center; ">
-                            <img style=" width: 64px; height: 64px; margin: 10px 0 20px 0; " src=${ICON_IMAGE} />
-                        </div>
-                        <div style=" text-align: center; padding: 40px; background: #fff; border-radius: 10px; ">
-                            <img style=" width: 100px; height: 100px; margin: auto; " src="https://res.cloudinary.com/mayurkamble/image/upload/v1625314150/icon/green_check_mark_icon_flat_yzusy1.png" />
-                            <h2 style=" margin: 0; ">Password Successfully Changed</h2>
-                            <p style=" color: rgb(165, 164, 164); margin: 5px; " >You have successfully changed your password</p>
-                            <a href=${url} style="background: #2196f3; border-radius: 4px; text-decoration: none; color: rgb(255, 255, 255); padding: 10px 30px; display: inline-block;">${emaillMessageButtonName}</a>
-                        </div>
-                    </div>
-                </div>
-            `
-            sendMail({ to: req.user.email, subject: txt, text: message })
-
-            res.json({ msg: "Password successfully changed!" })
-        } catch (err) {
-            return res.status(500).json({ msg: err.message })
-        }
-    },
     logout: async (req, res) => {
         try {
             res.clearCookie('refreshtoken', { path: '/api/refresh_token' })
@@ -234,6 +276,7 @@ const authController = {
             return res.status(500).json({ msg: err.message })
         }
     },
+
     generateAccessToken: async (req, res) => {
         try {
             const rf_token = req.cookies.refreshtoken
@@ -259,6 +302,7 @@ const authController = {
             return res.status(500).json({ msg: err.message })
         }
     }
+
 }
 
 function validateEmail(email) {
@@ -278,4 +322,4 @@ const createRefreshToken = (payload) => {
     return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30d' })
 }
 
-module.exports = authController
+module.exports = authController;

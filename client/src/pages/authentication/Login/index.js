@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { login } from '../../../redux/actions/authAction';
+import { login, forgotPassOTPSendMail, forgotPassOTPVerify } from '../../../redux/actions/authAction';
 
 import LoginForm from './LoginForm';
 import ForgotPassForm from './ForgotPassForm';
@@ -36,10 +36,12 @@ export default function Login() {
     const [userData, setUserData] = useState(initialState);
     const { email, password } = userData;
 
+    const [activeFormShow, setActiveFormShow] = useState('LoginForm');
+
     const [ForgotPassFormShow, setForgotPassFormShow] = useState(false);
     const [NewPassFormShow, setNewPassFormShow] = useState(false);
 
-    const { auth } = useSelector(state => state);
+    const { auth, fpass } = useSelector(state => state);
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -63,14 +65,12 @@ export default function Login() {
 
     const handleSubmitSentMail = e => {
         e.preventDefault();
-
-        // dispatch(login(userData));
+        dispatch(forgotPassOTPSendMail(userData));
     }
 
-    const handleVerifyOTP = e => {
+    const handleSubmitVerifyOTP = e => {
         e.preventDefault();
-
-        // dispatch(login(userData));
+        dispatch(forgotPassOTPVerify(userData));
     }
 
     return (
@@ -97,7 +97,40 @@ export default function Login() {
                         </div>
                     </div>
 
-                    {NewPassFormShow ? '' : (
+                    {
+                        activeFormShow === 'LoginForm' ?
+                            <LoginForm
+                                handleSubmitLogin={handleSubmitLogin}
+                                userData={userData}
+                                handleChangeInput={handleChangeInput}
+                                setActiveFormShow={setActiveFormShow}
+                            />
+                            : ''
+                    }
+
+                    {
+                        activeFormShow === 'ForgotPassForm' ?
+                            <ForgotPassForm
+                                handleSentMail={handleSubmitSentMail}
+                                userData={userData}
+                                handleSubmitVerifyOTP={handleSubmitVerifyOTP}
+                                handleChangeInput={handleChangeInput}
+                                handleChangeSelectInput={handleChangeSelectInput}
+                                setActiveFormShow={setActiveFormShow}
+                            />
+                            : ''
+                    }
+
+                    {
+                        activeFormShow === 'ResetPassForm' ?
+                            'Reset Pass Form'
+                            : ''
+                    }
+
+
+
+
+                    {/* {NewPassFormShow ? '' : (
                         <div>
                             {ForgotPassFormShow ?
                                 <ForgotPassForm
@@ -116,7 +149,7 @@ export default function Login() {
                             }
                         </div>
                     )
-                    }
+                    } */}
 
                 </Box>
                 <Copyright sx={{ mt: 10 }} />

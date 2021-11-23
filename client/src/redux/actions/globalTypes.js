@@ -1,5 +1,7 @@
 export const GLOBALTYPES = {
     AUTH: "AUTH",
+    FSPASS: "FSPASS",
+    FVPASS: "FVPASS",
     ALERT: "ALERT",
     THEME: 'THEME',
     STATUS: 'STATUS',
@@ -12,7 +14,7 @@ export const GLOBALTYPES = {
 }
 
 export const EditData = (data, id, post) => {
-    const newData = data.map(item => 
+    const newData = data.map(item =>
         (item._id === id ? post : item)
     )
     return newData;

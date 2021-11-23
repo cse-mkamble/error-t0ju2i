@@ -62,7 +62,7 @@ export default function LoginForm(props) {
                         <Button
                             color="primary"
                             sx={{ mb: 1 }}
-                            onClick={() => props.setForgotPassFormShow(true)}
+                            onClick={() => props.setActiveFormShow('ForgotPassForm')}
                         >
                             Forgot password
                         </Button>
@@ -94,7 +94,7 @@ export default function LoginForm(props) {
                     Login Now
                 </Button>
                 <Grid container justifyContent="center" >
-                    <Grid item sx={{ mt: 2 }}>
+                    <Grid item sx={{ mt: 3 }}>
                         <Link href="/register" variant="body2">
                             {"Don't have an account? Register Now"}
                         </Link>
