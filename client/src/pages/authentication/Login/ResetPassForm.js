@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, TextField, Button, Container, FormLabel, Checkbox, Grid, Link, Typography } from '@mui/material';
+import { Box, TextField, Button, Container, FormLabel, FormControlLabel, Checkbox, Grid, Link, Typography } from '@mui/material';
 
 import SendIcon from '@mui/icons-material/Send';
 
@@ -13,6 +13,7 @@ import OtpInput from "../../../components/UI/OTPInput";
 
 export default function ResetPassForm(props) {
 
+    const { alert } = useSelector(state => state);
     const [show_password, setShowPassword] = useState('password');
 
     return (
@@ -20,7 +21,7 @@ export default function ResetPassForm(props) {
             <Typography component="h1" variant="h5" sx={{ mt: 3 }}>
                 <div style={{ width: '100%' }} >Reset Password</div>
             </Typography>
-            <Box component="form" noValidate onSubmit={props.handleSubmitLogin} sx={{ mt: 3 }}>
+            <Box component="form" noValidate onSubmit={props.handleSubmitResetPass} sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <TextField

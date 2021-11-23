@@ -202,7 +202,7 @@ const authController = {
             `;
             sendMail({ to: email, subject: subject, text: message });
 
-            return response.json({ msg: "Password successfully changed." })
+            response.json({ msg: "Password successfully changed." })
         } catch (error) {
             console.log(error);
             return response.status(500).json({ msg: "Internal Server Error." });

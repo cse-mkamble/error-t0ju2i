@@ -10,10 +10,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { login, forgotPassOTPSendMail, forgotPassOTPVerify } from '../../../redux/actions/authAction';
+import { login, forgotPassOTPSendMail, forgotPassOTPVerify, resetPassword } from '../../../redux/actions/authAction';
 
 import LoginForm from './LoginForm';
 import ForgotPassForm from './ForgotPassForm';
+import ResetPassForm from './ResetPassForm';
 
 function Copyright(props) {
     return (
@@ -73,6 +74,11 @@ export default function Login() {
         dispatch(forgotPassOTPVerify(userData));
     }
 
+    const handleSubmitResetPass = (e) => {
+        e.preventDefault();
+        dispatch(resetPassword(userData));
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -104,6 +110,8 @@ export default function Login() {
                                 userData={userData}
                                 handleChangeInput={handleChangeInput}
                                 setActiveFormShow={setActiveFormShow}
+                                initialState={initialState}
+                                setUserData={setUserData}
                             />
                             : ''
                     }
@@ -123,7 +131,13 @@ export default function Login() {
 
                     {
                         activeFormShow === 'ResetPassForm' ?
-                            'Reset Pass Form'
+                            <ResetPassForm
+                                handleSubmitResetPass={handleSubmitResetPass}
+                                userData={userData}
+                                handleChangeInput={handleChangeInput}
+                                handleChangeSelectInput={handleChangeSelectInput}
+                                setActiveFormShow={setActiveFormShow}
+                            />
                             : ''
                     }
 

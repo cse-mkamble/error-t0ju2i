@@ -8,6 +8,10 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export default function LoginForm(props) {
 
+    useEffect(() => {
+        props.setUserData(props.initialState);
+    }, []);
+
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword(!showPassword);
