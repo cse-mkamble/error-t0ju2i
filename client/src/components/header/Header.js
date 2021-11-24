@@ -1,41 +1,55 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Menu from './Menu'
-import Search from './Search'
-import { useSelector } from 'react-redux'
+import * as React from 'react';
+import { useSelector } from 'react-redux';
 
-const Header = () => {
+import {
+    AppBar,
+    Box,
+    Toolbar,
+    Typography,
+    Link,
+    IconButton,
+    Badge
+} from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import ExploreIcon from '@mui/icons-material/Explore';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+
+import MenuBar from './Menu';
+import Search from './Search'
+
+
+
+export default function HeaderBar() {
 
     const { theme } = useSelector(state => state)
 
     return (
-        <div className="header bg-light">
-            <nav className="navbar navbar-expand-lg navbar-light 
-            bg-light justify-content-between align-middle">
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+                <Toolbar sx={{ background: '#f8f9fa', justifyContent: 'space-between' }}>
 
-                <Link to="/" className="logo">
-                    <h1 style={{ display: "flex", color: '#636060' }} className="navbar-brand p-0 m-0"
-                        onClick={() => window.scrollTo({ top: 0 })}>
-                        <div style={{
-                            filter: theme ? 'invert(1)' : 'invert(0)',
-                            color: theme ? 'white' : '#111',
-                            textAlign: "center",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }} >
-                            <img style={{ width: '28px', height: '28px' }} src="https://res.cloudinary.com/mayurkamble/image/upload/v1625477279/icon/ReachMe2_pnioxk.png" />
-                        </div>
-                        ReachMe
-                    </h1>
-                </Link>
+                    <Typography
+                        noWrap
+                        sx={{ display: { xs: 'none', sm: 'block' } }}
+                    >
+                        <Link href="/" underline="none">
+                            <div style={{ display: 'flex' }}>
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <img style={{ width: '32px', height: '32px' }} src='https://res.cloudinary.com/mayurkamble/image/upload/v1636887085/icon/bptheulgfynt1npaui36.png' />
+                                </div>
+                                <div style={{ padding: '0 10px' }}>
+                                    <div style={{ fontFamily: "'Chocolate', sans-serif", fontSize: '20px', fontWeight: 'bolder', letterSpacing: '4px' }}>FunBook</div>
+                                </div>
+                            </div>
+                        </Link>
+                    </Typography>
 
-                <Search />
+                    <MenuBar />
 
-                <Menu />
-            </nav>
-        </div>
+                </Toolbar>
+            </AppBar>
+        </Box>
     )
 }
-
-export default Header

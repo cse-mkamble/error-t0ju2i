@@ -1,92 +1,108 @@
-import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { logout } from '../../redux/actions/authAction'
-import { GLOBALTYPES } from '../../redux/actions/globalTypes'
-import Avatar from '../Avatar'
-import NotifyModal from '../NotifyModal'
+import * as React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-const Menu = () => {
-    const navLinks = [
-        { label: 'Home', icon: 'home', path: '/'},
-        { label: 'Message', icon: 'near_me', path: '/message'},
-        { label: 'Discover', icon: 'explore', path: '/discover'}
-    ]
+import {
+    AppBar,
+    Box,
+    Toolbar,
+    Typography,
+    Link,
+    IconButton,
+    Badge,
+    Menu,
+    MenuItem
+} from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import ExploreIcon from '@mui/icons-material/Explore';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+
+import NotifyModal from '../NotifyModal';
+
+export default function MenuBar() {
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const { auth, theme, notify } = useSelector(state => state)
     const dispatch = useDispatch()
-    const { pathname } = useLocation()
-
-    const isActive = (pn) => {
-        if(pn === pathname) return 'active'
-    }
 
     return (
-        <div className="menu">
-            <ul className="navbar-nav flex-row">
-                {
-                    navLinks.map((link, index) => (
-                        <li className={`nav-item px-2 ${isActive(link.path)}`} key={index}>
-                            <Link className="nav-link" to={link.path}>
-                                <span className="material-icons">{link.icon}</span>
-                            </Link>
-                        </li>
-                    ))
-                }
+        <div className='headerMenu'>
 
-                <li className="nav-item dropdown" style={{opacity: 1}} >
-                    <span className="nav-link position-relative" id="navbarDropdown" 
-                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <IconButton
+                size="large"
+                edge="start"
+                color="primary"
+                aria-label="Home"
+                href='/'
+            >
+                <HomeIcon />
+            </IconButton>
 
-                        <span className="material-icons" 
-                        style={{color: notify.data.length > 0 ? 'crimson' : ''}}>
-                            notifications
-                        </span>
+            <IconButton
+                size="large"
+                edge="start"
+                color="primary"
+                aria-label="Message"
+                href='/message'
+            >
+                <TelegramIcon />
+            </IconButton>
 
-                        <span className="notify_length">{notify.data.length}</span>
+            <IconButton
+                size="large"
+                edge="start"
+                color="primary"
+                aria-label="Discover"
+                href='/discover'
+            >
+                <ExploreIcon />
+            </IconButton>
 
-                    </span>
 
-                    <div className="dropdown-menu" aria-labelledby="navbarDropdown"
-                    style={{transform: 'translateX(75px)'}}>
-                        <NotifyModal />
-                    </div>
-                        
-                </li>
-           
-            
-                <li className="nav-item dropdown" style={{opacity: 1}} >
-                    <span className="nav-link dropdown-toggle" id="navbarDropdown" 
-                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <Avatar src={auth.user.avatar} size="medium-avatar" />
-                    </span>
+            <IconButton
+                id="basic-button"
+                aria-controls="basic-menu"
+                size="large"
+                edge="start"
+                color="primary"
+                aria-label="Notifications"
+                onClick={handleClick}
+            >
+                <Badge badgeContent={notify.data.length} color="error">
+                    <NotificationsIcon />
+                </Badge>
+            </IconButton>
+            <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                }}
+            >
+                <NotifyModal />
+            </Menu>
 
-                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <Link className="dropdown-item" to={`/profile/${auth.user._id}`}>Profile</Link>
+            <IconButton
+                size="large"
+                aria-label="Account Of Current User"
+                aria-controls="primary-search-account-menu"
+                aria-haspopup="true"
+                color="primary"
+            >
+                <AccountCircle />
+            </IconButton>
 
-                    <label htmlFor="theme" className="dropdown-item"
-                    onClick={() => dispatch({
-                        type: GLOBALTYPES.THEME, payload: !theme
-                    })}>
-
-                        {theme ? 'Light mode' : 'Dark mode'}
-                    </label>
-
-                    <Link className="dropdown-item" to={`/installation`}>Install App</Link>
-                    <Link className="dropdown-item" to={`/invite`}>Invite On</Link>
-                    <Link className="dropdown-item" to={`/aboutUs`}>About ReachMe</Link>
-
-                    <div className="dropdown-divider"></div>
-                    <Link className="dropdown-item" to="/"
-                    onClick={() => dispatch(logout())}>
-                        Logout
-                    </Link>
-                </div>
-            </li>
-        </ul>
-    </div>
-
+        </div>
     )
 }
-
-export default Menu
