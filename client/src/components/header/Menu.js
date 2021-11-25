@@ -39,7 +39,6 @@ export default function MenuBar() {
 
             <IconButton
                 size="large"
-                edge="start"
                 color="primary"
                 aria-label="Home"
                 href='/'
@@ -49,7 +48,6 @@ export default function MenuBar() {
 
             <IconButton
                 size="large"
-                edge="start"
                 color="primary"
                 aria-label="Message"
                 href='/message'
@@ -59,7 +57,6 @@ export default function MenuBar() {
 
             <IconButton
                 size="large"
-                edge="start"
                 color="primary"
                 aria-label="Discover"
                 href='/discover'
@@ -67,12 +64,10 @@ export default function MenuBar() {
                 <ExploreIcon />
             </IconButton>
 
-
             <IconButton
                 id="basic-button"
                 aria-controls="basic-menu"
                 size="large"
-                edge="start"
                 color="primary"
                 aria-label="Notifications"
                 onClick={handleClick}

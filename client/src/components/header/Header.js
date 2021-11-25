@@ -39,8 +39,8 @@ export default function HeaderBar() {
                                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                                     <img style={{ width: '32px', height: '32px' }} src='https://res.cloudinary.com/mayurkamble/image/upload/v1636887085/icon/bptheulgfynt1npaui36.png' />
                                 </div>
-                                <div style={{ padding: '0 10px' }}>
-                                    <div style={{ fontFamily: "'Chocolate', sans-serif", fontSize: '20px', fontWeight: 'bolder', letterSpacing: '4px' }}>FunBook</div>
+                                <div>
+                                    <div style={{ margin: '6px 0 0 6px', fontFamily: "'Chocolate', sans-serif", fontSize: '20px', fontWeight: 'bolder', letterSpacing: '2px' }}>FunBook</div>
                                 </div>
                             </div>
                         </Link>
