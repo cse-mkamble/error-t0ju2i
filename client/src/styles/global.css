@@ -81,7 +81,11 @@ img {
 /* --------- Responsive ------ */
 @media (max-width: 766px) {
 
-
+.headerMenu{
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
   
 
   .message {

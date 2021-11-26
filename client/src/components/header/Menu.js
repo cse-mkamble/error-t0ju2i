@@ -23,7 +23,7 @@ import NotifyModal from '../NotifyModal';
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 import { logout } from '../../redux/actions/authAction';
 
-export default function MenuBar() {
+export default function MenuBar(props) {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -49,8 +49,7 @@ export default function MenuBar() {
     const dispatch = useDispatch()
 
     return (
-        <div>
-
+        <div className='headerMenu'>
             <IconButton
                 size="large"
                 aria-label="Home"
