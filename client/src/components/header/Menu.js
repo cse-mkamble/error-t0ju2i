@@ -49,7 +49,7 @@ export default function MenuBar() {
     const dispatch = useDispatch()
 
     return (
-        <div className='headerMenu'>
+        <div>
 
             <IconButton
                 size="large"

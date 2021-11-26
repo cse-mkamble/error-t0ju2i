@@ -19,7 +19,7 @@ export default function HeaderBar() {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
-                <Toolbar sx={{ justifyContent: 'space-between' }}>
+                <Toolbar >
 
                     <Typography
                         noWrap
@@ -36,6 +36,8 @@ export default function HeaderBar() {
                             </div>
                         </Link>
                     </Typography>
+
+                    <SearchComponent />
 
                     <MenuBar />
 
