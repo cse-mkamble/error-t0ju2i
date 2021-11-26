@@ -6,20 +6,11 @@ import {
     Box,
     Toolbar,
     Typography,
-    Link,
-    IconButton,
-    Badge
+    Link
 } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
-import TelegramIcon from '@mui/icons-material/Telegram';
-import ExploreIcon from '@mui/icons-material/Explore';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 
 import MenuBar from './Menu';
-import Search from './Search'
-
-
+import SearchComponent from './Search';
 
 export default function HeaderBar() {
 
@@ -28,7 +19,7 @@ export default function HeaderBar() {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
-                <Toolbar sx={{ background: '#f8f9fa', justifyContent: 'space-between' }}>
+                <Toolbar sx={{ justifyContent: 'space-between' }}>
 
                     <Typography
                         noWrap
@@ -40,7 +31,7 @@ export default function HeaderBar() {
                                     <img style={{ width: '32px', height: '32px' }} src='https://res.cloudinary.com/mayurkamble/image/upload/v1636887085/icon/bptheulgfynt1npaui36.png' />
                                 </div>
                                 <div>
-                                    <div style={{ margin: '6px 0 0 6px', fontFamily: "'Chocolate', sans-serif", fontSize: '20px', fontWeight: 'bolder', letterSpacing: '2px' }}>FunBook</div>
+                                    <div style={{ margin: '4px', fontFamily: "'Chocolate', sans-serif", fontSize: '20px', fontWeight: 'bolder', letterSpacing: '2px', color: 'white' }}>FunBook</div>
                                 </div>
                             </div>
                         </Link>

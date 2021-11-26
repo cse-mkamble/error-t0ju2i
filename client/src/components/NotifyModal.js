@@ -3,25 +3,20 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
     Avatar,
-    AppBar,
+    Divider,
     Box,
     Button,
-    Toolbar,
     Typography,
     Link,
-    IconButton,
-    Badge,
-    Menu,
-    MenuItem
+    IconButton
 } from '@mui/material';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import CircleIcon from '@mui/icons-material/Circle';
 
-import NoNotice from '../images/notice.png'
-// import Avatar from './Avatar'
-import moment from 'moment'
-import { isReadNotify, NOTIFY_TYPES, deleteAllNotifies } from '../redux/actions/notifyAction'
+import NoNotice from '../images/notice.png';
+import moment from 'moment';
+import { isReadNotify, NOTIFY_TYPES, deleteAllNotifies } from '../redux/actions/notifyAction';
 
 export default function NotifyModal() {
     const { auth, notify } = useSelector(state => state)
@@ -45,7 +40,7 @@ export default function NotifyModal() {
     }
 
     return (
-        <Box sx={{ minWidth: '300px', padding: '0 10px' }}>
+        <Box sx={{ minWidth: '300px' }}>
             <div style={{ padding: '0 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography>Notification</Typography>
                 {
@@ -71,7 +66,7 @@ export default function NotifyModal() {
                         </IconButton>
                 }
             </div>
-            <hr />
+            <Divider />
             {
                 notify.data.length === 0 &&
                 <img src={NoNotice} alt="NoNotice" style={{ width: '100%' }} />
@@ -113,7 +108,7 @@ export default function NotifyModal() {
                 }
             </div>
 
-            <hr style={{ marginBottom: '10px' }} />
+            <Divider style={{ marginBottom: '10px' }} />
             <div style={{ direction: 'rtl' }} >
                 <Button variant="text" onClick={handleDeleteAll} >Delete All</Button>
             </div>

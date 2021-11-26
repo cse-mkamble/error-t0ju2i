@@ -2,33 +2,47 @@ import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
-    AppBar,
-    Box,
-    Toolbar,
-    Typography,
-    Link,
+    Avatar,
     IconButton,
     Badge,
     Menu,
-    MenuItem
+    MenuItem,
+    Divider,
+    FormLabel
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import ExploreIcon from '@mui/icons-material/Explore';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import PersonIcon from '@mui/icons-material/Person';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import NotifyModal from '../NotifyModal';
+import { GLOBALTYPES } from '../../redux/actions/globalTypes';
+import { logout } from '../../redux/actions/authAction';
 
 export default function MenuBar() {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const [accAnchorEl, setAccAnchorEl] = React.useState(null);
+    const openAcc = Boolean(accAnchorEl);
+
+    const handleAccClick = (event) => {
+        setAccAnchorEl(event.currentTarget);
+    };
+    const handleAccClose = () => {
+        setAccAnchorEl(null);
     };
 
     const { auth, theme, notify } = useSelector(state => state)
@@ -39,8 +53,8 @@ export default function MenuBar() {
 
             <IconButton
                 size="large"
-                color="primary"
                 aria-label="Home"
+                color="inherit"
                 href='/'
             >
                 <HomeIcon />
@@ -48,8 +62,8 @@ export default function MenuBar() {
 
             <IconButton
                 size="large"
-                color="primary"
                 aria-label="Message"
+                color="inherit"
                 href='/message'
             >
                 <TelegramIcon />
@@ -57,8 +71,8 @@ export default function MenuBar() {
 
             <IconButton
                 size="large"
-                color="primary"
                 aria-label="Discover"
+                color="inherit"
                 href='/discover'
             >
                 <ExploreIcon />
@@ -68,7 +82,7 @@ export default function MenuBar() {
                 id="basic-button"
                 aria-controls="basic-menu"
                 size="large"
-                color="primary"
+                color="inherit"
                 aria-label="Notifications"
                 onClick={handleClick}
             >
@@ -91,13 +105,48 @@ export default function MenuBar() {
             <IconButton
                 size="large"
                 aria-label="Account Of Current User"
+                id="primary-search-account-button"
                 aria-controls="primary-search-account-menu"
                 aria-haspopup="true"
                 color="primary"
+                onClick={handleAccClick}
             >
-                <AccountCircle />
+                <Avatar src={auth.user.avatar} sx={{ width: 24, height: 24 }} />
             </IconButton>
+            <Menu
+                id="primary-search-account-menu"
+                anchorEl={accAnchorEl}
+                open={openAcc}
+                onClose={handleAccClose}
+                MenuListProps={{
+                    'aria-labelledby': 'primary-search-account-button',
+                }}
+            >
+                <MenuItem onClick={() => window.location.href = `/profile/${auth.user._id}`} >
+                    <PersonIcon aria-label="Profile" color="primary" />
+                    <FormLabel sx={{ mx: 1 }}>Profile</FormLabel>
+                </MenuItem>
+                {theme ? <MenuItem onClick={() => dispatch({
+                    type: GLOBALTYPES.THEME, payload: !theme
+                })} >
+                    <LightModeIcon aria-label="Light Mode"
+                        color="primary" />
+                    <FormLabel sx={{ mx: 1 }}>Light Mode</FormLabel>
+                </MenuItem > : <MenuItem onClick={() => dispatch({
+                    type: GLOBALTYPES.THEME, payload: !theme
+                })} >
+                    <DarkModeIcon aria-label="Light Mode"
+                        color="primary" />
+                    <FormLabel sx={{ mx: 1 }}>Dark Mode</FormLabel>
+                </MenuItem >}
+                <Divider />
+                <MenuItem onClick={() => dispatch(logout())} >
+                    <LogoutIcon aria-label="Logout"
+                        color="primary" />
+                    <FormLabel sx={{ mx: 1 }}>Logout</FormLabel>
+                </MenuItem>
+            </Menu>
 
-        </div>
+        </div >
     )
 }

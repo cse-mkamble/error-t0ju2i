@@ -1,73 +1,64 @@
-import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { getDataAPI } from '../../utils/fetchData'
-import { GLOBALTYPES } from '../../redux/actions/globalTypes'
-import UserCard from '../UserCard'
-import LoadIcon from '../../images/loading.gif'
+import * as React from 'react';
 
-const Search = () => {
-    const [search, setSearch] = useState('')
-    const [users, setUsers] = useState([])
+import {
+    InputBase
+} from '@mui/material';
+import { styled, alpha } from '@mui/material/styles';
+import SearchIcon from '@mui/icons-material/Search';
 
-    const { auth } = useSelector(state => state)
-    const dispatch = useDispatch()
-    const [load, setLoad] = useState(false)
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    minWidth: '250px',
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(3),
+        width: 'auto',
+    },
+}));
 
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
 
-    const handleSearch = async (e) => {
-        e.preventDefault()
-        if(!search) return;
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+            width: '20ch',
+        },
+    },
+}));
 
-        try {
-            setLoad(true)
-            const res = await getDataAPI(`search?username=${search}`, auth.token)
-            setUsers(res.data.users)
-            setLoad(false)
-        } catch (err) {
-            dispatch({
-                type: GLOBALTYPES.ALERT, payload: {error: err.response.data.msg}
-            })
-        }
-    }
-
-    const handleClose = () => {
-        setSearch('')
-        setUsers([])
-    }
-
+export default function SearchComponent() {
     return (
-        <form className="search_form" onSubmit={handleSearch}>
-            <input type="text" name="search" value={search} id="search" title="Enter to Search"
-            onChange={e => setSearch(e.target.value.toLowerCase().replace(/ /g, ''))} />
-
-            <div className="search_icon" style={{opacity: search ? 0 : 0.3}}>
-                <span className="material-icons">search</span>
-                <span>Enter to Search</span>
-            </div>
-
-            <div className="close_search" onClick={handleClose}
-            style={{opacity: users.length === 0 ? 0 : 1}} >
-                &times;
-            </div>
-
-            <button type="submit" style={{display: 'none'}}>Search</button>
-
-            { load && <img className="loading" src={LoadIcon} alt="loading"  /> }
-
-            <div className="users">
-                {
-                    search && users.map(user => (
-                        <UserCard 
-                        key={user._id} 
-                        user={user} 
-                        border="border"
-                        handleClose={handleClose} 
-                        />
-                    ))
-                }
-            </div>
-        </form>
+        <div>
+            <Search>
+                <SearchIconWrapper>
+                    <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                    placeholder="Search…"
+                    inputProps={{ 'aria-label': 'search' }}
+                />
+            </Search>
+        </div>
     )
 }
-
-export default Search
