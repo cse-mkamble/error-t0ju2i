@@ -1,32 +1,36 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import * as React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import UserCard from '../UserCard'
-import FollowBtn from '../FollowBtn'
-import LoadIcon from '../../images/loading.gif'
-import { getSuggestions } from '../../redux/actions/suggestionsAction'
+import { Box, Typography, IconButton, CircularProgress } from '@mui/material';
+import ReplayIcon from '@mui/icons-material/Replay';
 
-const RightSideBar = () => {
-    const { auth, suggestions } = useSelector(state => state)
-    const dispatch = useDispatch()
+import UserCard from '../UserCard';
+import FollowBtn from '../FollowBtn';
+import { getSuggestions } from '../../redux/actions/suggestionsAction';
+
+export default function RightSideBar() {
+    const { auth, suggestions } = useSelector(state => state);
+    const dispatch = useDispatch();
 
     return (
-        <div className="mt-3">
+        <Box sx={{ mt: 1 }}>
             <UserCard user={auth.user} />
-
-            <div className="d-flex justify-content-between align-items-center my-2">
-                <h5 className="text-danger">Suggestions for you</h5>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', m: 1 }}>
+                <Typography component='h5' color='error' sx={{ margin: '10px 0' }}>Suggestions for you</Typography>
                 {
-                    !suggestions.loading &&
-                    <i className="fas fa-redo" style={{cursor: 'pointer'}}
-                    onClick={ () => dispatch(getSuggestions(auth.token)) } />
+                    !suggestions.loading && <IconButton
+                        aria-label="Reload"
+                        color="error"
+                        onClick={() => dispatch(getSuggestions(auth.token))}
+                    >
+                        <ReplayIcon />
+                    </IconButton>
                 }
-            </div>
-
+            </Box>
             {
-                suggestions.loading
-                ? <img src={LoadIcon} alt="loading" className="d-block mx-auto my-4" />
-                : <div className="suggestions">
+                suggestions.loading ? <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <CircularProgress />
+                </Box> : <Box className="suggestions">
                     {
                         suggestions.users.map(user => (
                             <UserCard key={user._id} user={user} >
@@ -34,13 +38,8 @@ const RightSideBar = () => {
                             </UserCard>
                         ))
                     }
-                </div>
+                </Box>
             }
-
-            
-
-        </div>
-    )
+        </Box>
+    );
 }
-
-export default RightSideBar
