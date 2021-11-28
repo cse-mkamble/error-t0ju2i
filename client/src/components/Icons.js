@@ -1,23 +1,48 @@
-import React from 'react'
+import * as React from 'react';
 
-const Icons = ({setContent, content, theme}) => {
-    const reactions = [   
-        '❤️', '😆', '😯', '😢', '😡', '👍', '👎', '😄',
+import { Box, IconButton, Menu, MenuItem } from '@mui/material';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+
+export default function Icons({ setContent, content, theme }) {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const reactions = [
+        '😇', '😆', '😯', '😢', '😡', '👍', '👎', '😄',
         '😂', '😍', '😘', '😗', '😚', '😳', '😭', '😓',
         '😤', '🤤', '👻', '💀', '🤐', '😴', '😷', '😵'
     ]
 
     return (
-        <div className="nav-item dropdown" 
-        style={{ opacity: 1, filter: theme ? 'invert(1)' : 'invert(0)' }}>
-            
-            <span className="nav-link position-relative px-1" id="navbarDropdown" 
-            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span style={{opacity: 0.4}}>😄</span>
-            </span>
+        <Box sx={{ opacity: 1, filter: theme ? 'invert(1)' : 'invert(0)' }}>
 
-            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div className="reactions">
+            <IconButton
+                id="basic-button"
+                aria-controls="basic-menu"
+                size="large"
+                color="primary"
+                aria-label="Notifications"
+                onClick={handleClick}
+            >
+                <EmojiEmotionsIcon />
+            </IconButton>
+            <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                }}
+            >
+                <Box className="reactions">
                     {
                         reactions.map(icon => (
                             <span key={icon} onClick={() => setContent(content + icon)}>
@@ -25,11 +50,9 @@ const Icons = ({setContent, content, theme}) => {
                             </span>
                         ))
                     }
-                </div>
-            </div>
-                
-        </div>
+                </Box>
+            </Menu>
+
+        </Box>
     )
 }
-
-export default Icons
