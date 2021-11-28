@@ -2,17 +2,16 @@ import * as React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Box, Typography, IconButton } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import ImageIcon from '@mui/icons-material/Image';
 
-import { GLOBALTYPES } from '../redux/actions/globalTypes'
-import { createPost, updatePost } from '../redux/actions/postAction'
-import Icons from './Icons'
-import { imageShow, videoShow } from '../utils/mediaShow'
-
+import { GLOBALTYPES } from '../redux/actions/globalTypes';
+import { createPost, updatePost } from '../redux/actions/postAction';
+import Icons from './Icons';
+import { imageShow, videoShow } from '../utils/mediaShow';
 
 export default function StatusModal() {
-
     const { auth, theme, status, socket } = useSelector(state => state);
     const dispatch = useDispatch();
 
@@ -83,17 +82,13 @@ export default function StatusModal() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (images.length === 0);
-        return dispatch({
-            type: GLOBALTYPES.ALERT, payload: { error: "Please add your photo." }
-        });
+        if (images.length === 0) return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Please add your photo." } });
 
         if (status.onEdit) {
             dispatch(updatePost({ content, images, auth, status }));
         } else {
             dispatch(createPost({ content, images, auth, socket }));
         }
-
 
         setContent('');
         setImages([]);
@@ -107,8 +102,6 @@ export default function StatusModal() {
             setImages(status.images);
         }
     }, [status]);
-
-
 
     return (
         <Box className="status_modal">
@@ -132,46 +125,41 @@ export default function StatusModal() {
                             background: theme ? 'rgba(0,0,0,.03)' : '',
                         }} />
 
-                    {/* <Box sx={{ display: 'flex' }}>
-                        <Box sx={{ flex: 'auto' }}></Box>
+                    <Box sx={{ direction: 'rtl' }}>
                         <Icons setContent={setContent} content={content} theme={theme} />
-                    </Box> */}
+                    </Box>
 
                     <Box className="show_images">
-
+                        {images.map((img, index) => (<Box key={index} id="file_img">
+                            {img.camera ? imageShow(img.camera, theme) : img.url ? <>
+                                {img.url.match(/video/i) ? videoShow(img.url, theme) : imageShow(img.url, theme)}
+                            </> : <>
+                                {img.type.match(/video/i) ? videoShow(URL.createObjectURL(img), theme) : imageShow(URL.createObjectURL(img), theme)}
+                            </>}
+                            <span onClick={() => deleteImages(index)}>&times;</span>
+                        </Box>))}
                     </Box>
+                    {stream && <Box className="stream" sx={{ position: 'relative' }}>
+                        <video autoPlay muted ref={videoRef} width="100%" height="100%"
+                            style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
 
+                        <span onClick={handleStopStream}>&times;</span>
+                        <canvas ref={refCanvas} style={{ display: 'none' }} />
+                    </Box>}
                     <Box className="input_images">
-                        {
-                            stream
-                                ? <IconButton
-                                    size="large"
-                                    aria-label="camera"
-                                    color="primary"
-                                    onClick={handleCapture}
-                                >
-                                    <PhotoCameraIcon />
-                                </IconButton>
-                                : <Box>
-                                    <IconButton
-                                        size="large"
-                                        aria-label="camera"
-                                        color="primary"
-                                        onClick={handleStream}
-                                    >
-                                        <PhotoCameraIcon />
-                                    </IconButton>
-                                    <Box className="file_upload">
-                                        <i className="fas fa-image" />
-                                        <input type="file" name="file" id="file"
-                                            multiple accept="image/*,video/*" onChange={handleChangeImages} />
-                                    </Box>
-                                </Box>
-                        }
+                        {stream ? <PhotoCameraIcon color='primary' onClick={handleCapture} /> : <>
+                            <PhotoCameraIcon color='primary' onClick={handleStream} />
+                            <Box className="file_upload">
+                                <ImageIcon color='primary' />
+                                <input type="file" name="file" id="file"
+                                    multiple accept="image/*,video/*" onChange={handleChangeImages} />
+                            </Box>
+                        </>}
                     </Box>
-
                 </Box>
-
+                <Box className="status_footer">
+                    <Button fullWidth variant="contained" type="submit">Post</Button>
+                </Box>
             </Box>
         </Box>
     );
