@@ -19,7 +19,7 @@ export default function HeaderBar() {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
-                <Toolbar sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'space-between' }}>
+                <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Typography
                         noWrap
                         sx={{ display: { xs: 'none', sm: 'block' } }}
@@ -35,27 +35,6 @@ export default function HeaderBar() {
                             </div>
                         </Link>
                     </Typography>
-                    <SearchComponent />
-                    <MenuBar />
-                </Toolbar>
-
-                <Toolbar sx={{ display: { xs: 'block', md: 'none' }, padding: '10px' }}>
-                    <Typography
-                        noWrap
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
-                    >
-                        <Link href="/" underline="none">
-                            <div style={{ display: 'flex' }}>
-                                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                    <img style={{ width: '32px', height: '32px' }} src='https://res.cloudinary.com/mayurkamble/image/upload/v1636887085/icon/bptheulgfynt1npaui36.png' />
-                                </div>
-                                <div>
-                                    <div style={{ margin: '4px', fontFamily: "'Chocolate', sans-serif", fontSize: '20px', fontWeight: 'bolder', letterSpacing: '2px', color: 'white' }}>FunBook</div>
-                                </div>
-                            </div>
-                        </Link>
-                    </Typography>
-                    <SearchComponent />
                     <MenuBar />
                 </Toolbar>
             </AppBar>

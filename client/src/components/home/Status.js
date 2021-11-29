@@ -1,22 +1,25 @@
-import React from 'react'
-import Avatar from '../Avatar'
-import { useSelector, useDispatch } from 'react-redux'
-import { GLOBALTYPES } from '../../redux/actions/globalTypes'
+import * as React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-const Status = () => {
-    const { auth } = useSelector(state => state)
-    const dispatch = useDispatch()
+import { Box, Button, Avatar } from '@mui/material';
+
+import { GLOBALTYPES } from '../../redux/actions/globalTypes';
+
+export default function Status() {
+    const { auth } = useSelector(state => state);
+    const dispatch = useDispatch();
 
     return (
-        <div className="status my-3 d-flex">
-            <Avatar src={auth.user.avatar} size="big-avatar" />
-            
-            <button className="statusBtn flex-fill"
-            onClick={() => dispatch({ type: GLOBALTYPES.STATUS, payload: true })}>
-                {auth.user.username}, what are you thinking?
-            </button>
-        </div>
-    )
+        <Box sx={{ padding: '10px', display: 'flex' }}>
+            <Box sx={{ mr: 1 }}><Avatar src={auth.user.avatar} /></Box>
+            <Button
+                fullWidth
+                size='small'
+                color='info'
+                variant="outlined"
+                sx={{ display: 'flex', justifyContent: 'flex-start', textTransform: 'none' }}
+                onClick={() => dispatch({ type: GLOBALTYPES.STATUS, payload: true })}
+            >{auth.user.username}, what are you thinking?</Button>
+        </Box>
+    );
 }
-
-export default Status

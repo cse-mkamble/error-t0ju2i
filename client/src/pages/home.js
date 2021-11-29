@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Grid } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 
 import Status from '../components/home/Status';
 import Posts from '../components/home/Posts';
@@ -31,7 +31,14 @@ export default function Home() {
         <div>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={8}>
-                    <Status />
+                    <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+                        <Status />
+                    </Box>
+                    <Box sx={{ display: { xs: 'none', sm: 'block' }, padding: '10px 40px' }}>
+                        <Box sx={{ width: '100%' }} >
+                            <Status />
+                        </Box>
+                    </Box>
                 </Grid>
                 <Grid item xs={12} md={4}>
                     <RightSideBar />
