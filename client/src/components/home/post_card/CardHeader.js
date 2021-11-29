@@ -1,75 +1,105 @@
-import React from 'react'
-import Avatar from '../../Avatar'
-import { Link, useHistory } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import moment from 'moment'
-import { GLOBALTYPES } from '../../../redux/actions/globalTypes'
-import { deletePost } from '../../../redux/actions/postAction'
-import { BASE_URL } from '../../../utils/config'
+import * as React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
-const CardHeader = ({post}) => {
-    const { auth, socket } = useSelector(state => state)
-    const dispatch = useDispatch()
+import { Box, Divider, CardHeader, Link, Avatar, IconButton, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ContentCopy from '@mui/icons-material/ContentCopy';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-    const history = useHistory()
+import { GLOBALTYPES } from '../../../redux/actions/globalTypes';
+import { deletePost } from '../../../redux/actions/postAction';
+import { BASE_URL } from '../../../utils/config';
+
+export default function PostCardHeader({ post }) {
+    const { auth, socket } = useSelector(state => state);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const handleEditPost = () => {
-        dispatch({ type: GLOBALTYPES.STATUS, payload: {...post, onEdit: true}})
+        dispatch({ type: GLOBALTYPES.STATUS, payload: { ...post, onEdit: true } });
     }
 
     const handleDeletePost = () => {
-        if(window.confirm("Are you sure want to delete this post?")){
-            dispatch(deletePost({post, auth, socket}))
-            return history.push("/")
+        if (window.confirm("Are you sure want to delete this post?")) {
+            dispatch(deletePost({ post, auth, socket }));
+            return history.push("/");
         }
     }
 
     const handleCopyLink = () => {
-        navigator.clipboard.writeText(`${BASE_URL}/post/${post._id}`)
+        navigator.clipboard.writeText(`${BASE_URL}/post/${post._id}`);
     }
 
-    return (
-        <div className="card_header">
-            <div className="d-flex">
-                <Avatar src={post.user.avatar} size="big-avatar" />
-
-                <div className="card_name">
-                    <h6 className="m-0">
-                        <Link to={`/profile/${post.user._id}`} className="text-dark">
-                            {post.user.username}
-                        </Link>
-                    </h6>
-                    <small className="text-muted">
-                        {moment(post.createdAt).fromNow()}
-                    </small>
-                </div>
-            </div>
-
-            <div className="nav-item dropdown">
-                <span className="material-icons" id="moreLink" data-toggle="dropdown">
-                    more_horiz
-                </span>
-
-                <div className="dropdown-menu">
-                    {
-                        auth.user._id === post.user._id &&
-                        <>
-                            <div className="dropdown-item" onClick={handleEditPost}>
-                                <span className="material-icons">create</span> Edit Post
-                            </div>
-                            <div className="dropdown-item" onClick={handleDeletePost} >
-                                <span className="material-icons">delete_outline</span> Remove Post
-                            </div>
-                        </>
-                    }
-
-                    <div className="dropdown-item" onClick={handleCopyLink}>
-                        <span className="material-icons">content_copy</span> Copy Link
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
+    return (<Box>
+        <Divider />
+        <CardHeader
+            avatar={<Avatar src={post.user.avatar} />}
+            action={<Box>
+                <IconButton
+                    aria-label="settings"
+                    id="basic-button"
+                    aria-controls="basic-menu"
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClick}
+                ><MoreVertIcon />
+                </IconButton>
+                <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                    }}
+                > {auth.user._id === post.user._id && <>
+                    <MenuItem onClick={() => {
+                        handleEditPost();
+                        handleClose();
+                    }}>
+                        <ListItemIcon>
+                            <EditOutlinedIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText>Edit Post</ListItemText>
+                    </MenuItem>
+                    <MenuItem onClick={() => {
+                        handleDeletePost();
+                        handleClose();
+                    }}>
+                        <ListItemIcon>
+                            <DeleteOutlineIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText>Remove Post</ListItemText>
+                    </MenuItem>
+                </>}
+                    <MenuItem onClick={() => {
+                        handleCopyLink();
+                        handleClose();
+                    }}>
+                        <ListItemIcon>
+                            <ContentCopy fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText>Copy Link</ListItemText>
+                    </MenuItem>
+                </Menu>
+            </Box>}
+            title={<Link href={`/profile/${post.user._id}`} color="inherit" underline="none">
+                {post.user.username}
+            </Link>}
+            subheader={moment(post.createdAt).fromNow()}
+        />
+        <Divider />
+    </Box>);
 }
-
-export default CardHeader
