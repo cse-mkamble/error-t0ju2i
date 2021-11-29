@@ -1,19 +1,15 @@
-import React from 'react'
+import * as React from 'react';
+import { Box, Button } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const LoadMoreBtn = ({result, page, load, handleLoadMore}) => {
-    return (
-        <>
-            {
-                result < 9 * (page - 1) ? '' : 
+export default function LoadMoreBtn({ result, page, load, handleLoadMore }) {
 
-                !load && <button className="btn btn-dark mx-auto d-block"
-                onClick={handleLoadMore}>
-                    Load more
-                </button>
-            }
-            
-        </>
-    )
+    return (<Box sx={{ mt: 1, display: 'flex', justifyContent: 'center' }}>
+        {result < 9 * (page - 1) ? '' : !load && <Button
+            variant="outlined"
+            color='info'
+            endIcon={<ExpandMoreIcon />}
+            onClick={handleLoadMore}
+        >Load more</Button>}
+    </Box>);
 }
-
-export default LoadMoreBtn
