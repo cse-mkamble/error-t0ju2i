@@ -26,5 +26,8 @@ npm install @mui/material @mui/styled-engine-sc styled-components
 npm install @mui/icons-material
 
 npm install validator --save
+npm install react-responsive-carousel --save
+npm install framer-motion
+npm install typescript
 
 cd ..

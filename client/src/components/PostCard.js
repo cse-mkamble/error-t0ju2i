@@ -10,7 +10,7 @@ import InputComment from './home/InputComment';
 
 export default function PostCard({ post, theme }) {
 
-    return (<Card>
+    return (<Card sx={{ my: 1 }}>
         <CardHeader post={post} />
         <CardBody post={post} theme={theme} />
         <CardFooter post={post} />
