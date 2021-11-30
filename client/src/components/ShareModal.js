@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react';
 import {
     EmailShareButton, EmailIcon,
     FacebookShareButton, FacebookIcon,
@@ -6,37 +6,33 @@ import {
     TwitterShareButton, TwitterIcon,
     WhatsappShareButton, WhatsappIcon,
     RedditShareButton, RedditIcon
-} from 'react-share'
+} from 'react-share';
+import { Box } from '@mui/material';
 
-const ShareModal = ({url, theme}) => {
-    return (
-        <div className="d-flex justify-content-between px-4 py-2"
-        style={{filter: theme ? 'invert(1)' : 'invert(0)' }}>
-            <FacebookShareButton url={url} >
-                <FacebookIcon round={true} size={32} />
-            </FacebookShareButton>
+export default function ShareModal({ url, theme }) {
+    return (<Box sx={{ px: '30px', display: 'flex', justifyContent: 'space-between', filter: theme ? 'invert(1)' : 'invert(0)' }}>
+        <FacebookShareButton url={url} >
+            <FacebookIcon round={true} size={24} />
+        </FacebookShareButton>
 
-            <TwitterShareButton url={url} >
-                <TwitterIcon round={true} size={32} />
-            </TwitterShareButton>
+        <TwitterShareButton url={url} >
+            <TwitterIcon round={true} size={24} />
+        </TwitterShareButton>
 
-            <EmailShareButton url={url} >
-                <EmailIcon round={true} size={32} />
-            </EmailShareButton>
+        <EmailShareButton url={url} >
+            <EmailIcon round={true} size={24} />
+        </EmailShareButton>
 
-            <RedditShareButton url={url} >
-                <RedditIcon round={true} size={32} />
-            </RedditShareButton>
+        <RedditShareButton url={url} >
+            <RedditIcon round={true} size={24} />
+        </RedditShareButton>
 
-            <TelegramShareButton url={url} >
-                <TelegramIcon round={true} size={32} />
-            </TelegramShareButton>
+        <TelegramShareButton url={url} >
+            <TelegramIcon round={true} size={24} />
+        </TelegramShareButton>
 
-            <WhatsappShareButton url={url} >
-                <WhatsappIcon round={true} size={32} />
-            </WhatsappShareButton>
-        </div>
-    )
+        <WhatsappShareButton url={url} >
+            <WhatsappIcon round={true} size={24} />
+        </WhatsappShareButton>
+    </Box>);
 }
-
-export default ShareModal

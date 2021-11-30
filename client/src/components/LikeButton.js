@@ -1,19 +1,27 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import * as React from 'react';
+import { IconButton, Typography } from '@mui/material';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 
-const LikeButton = ({isLike, handleLike, handleUnLike}) => {
-    const { theme } = useSelector(state => state)
+export default function LikeButton({ isLike, valueLike, handleLike, handleUnLike }) {
 
-    return (
-        <>
-            {
-                isLike
-                ? <i className="fas fa-heart text-danger" onClick={handleUnLike}
-                style={{filter: theme ? 'invert(1)' : 'invert(0)'}} />
-                : <i className="far fa-heart" onClick={handleLike} />
-            }
-        </>
-    )
+    return (<>
+        {isLike ? <IconButton
+            size="small"
+            aria-label="FavoriteIcon"
+            color="error"
+            onClick={handleUnLike}
+        >
+            <Typography >{valueLike}</Typography>
+            <FavoriteOutlinedIcon />
+        </IconButton> : <IconButton
+            size="small"
+            aria-label="FavoriteIcon"
+            color="default"
+            onClick={handleLike}
+        >
+            <Typography >{valueLike}</Typography>
+            <FavoriteBorderOutlinedIcon />
+        </IconButton>}
+    </>);
 }
-
-export default LikeButton
