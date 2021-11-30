@@ -128,6 +128,12 @@ img {
     padding-left: 15px;
 }
 
+.headerMenu {
+    min-width: 340px;
+    display: flex;
+    justify-content: space-around;
+}
+
 /* -------- AUTH ---------- */
 @import url("./auth.css");
 

@@ -13,14 +13,8 @@ export default function CarouselComponent({ images, id }) {
 
     return (<Carousel showArrows={true} showThumbs={false} infiniteLoop={true}>
         {images.map((img, index) => <Box key={index} className={`carousel-item ${isActive(index)}`}>
-            {
-                img.url.match(/video/i)
-                    ? <video controls src={img.url} className="d-block w-100" alt={img.url}
-                        style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
-
-                    : <img src={img.url} className="d-block w-100" alt={img.url}
-                        style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />}
-        </Box>
-        )}
+            {img.url.match(/video/i) ? <video controls src={img.url} className="d-block w-100" alt={img.url} />
+                : <img src={img.url} className="d-block w-100" alt={img.url} />}
+        </Box>)}
     </Carousel>);
 }

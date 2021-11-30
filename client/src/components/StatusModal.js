@@ -104,7 +104,7 @@ export default function StatusModal() {
     }, [status]);
 
     return (
-        <Box className="status_modal">
+        <Box className="status_modal" sx={{ mt: 5 }}>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                 <Box className="status_header">
                     <Typography component="h1" variant="h5">Create Post</Typography>

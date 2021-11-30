@@ -18,7 +18,7 @@ export default function HeaderBar() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="fixed" color='inherit'>
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Typography
                         noWrap
@@ -30,7 +30,7 @@ export default function HeaderBar() {
                                     <img style={{ width: '32px', height: '32px' }} src='https://res.cloudinary.com/mayurkamble/image/upload/v1636887085/icon/bptheulgfynt1npaui36.png' />
                                 </div>
                                 <div>
-                                    <div style={{ margin: '5px', fontFamily: "'Chocolate', sans-serif", fontSize: '20px', fontWeight: 'bolder', letterSpacing: '4px', color: 'white' }}>FunBook</div>
+                                    <div style={{ margin: '5px', fontFamily: "'Chocolate', sans-serif", fontSize: '20px', fontWeight: 'bolder', letterSpacing: '4px' }}>FunBook</div>
                                 </div>
                             </div>
                         </Link>
@@ -38,6 +38,7 @@ export default function HeaderBar() {
                     <MenuBar />
                 </Toolbar>
             </AppBar>
+            <Box sx={{ mt: 10 }}></Box>
         </Box>
     )
 }

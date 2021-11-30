@@ -18,6 +18,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
 import NotifyModal from '../NotifyModal';
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
@@ -51,7 +52,7 @@ export default function MenuBar(props) {
     return (
         <div className='headerMenu'>
             <IconButton
-                size="large"
+                size="small"
                 aria-label="Home"
                 color="inherit"
                 href='/'
@@ -60,7 +61,7 @@ export default function MenuBar(props) {
             </IconButton>
 
             <IconButton
-                size="large"
+                size="small"
                 aria-label="Message"
                 color="inherit"
                 href='/message'
@@ -69,7 +70,16 @@ export default function MenuBar(props) {
             </IconButton>
 
             <IconButton
-                size="large"
+                size="small"
+                aria-label="Create Post"
+                color="inherit"
+                onClick={() => dispatch({ type: GLOBALTYPES.STATUS, payload: true })}
+            >
+                <AddBoxOutlinedIcon />
+            </IconButton>
+
+            <IconButton
+                size="small"
                 aria-label="Discover"
                 color="inherit"
                 href='/discover'
@@ -80,7 +90,7 @@ export default function MenuBar(props) {
             <IconButton
                 id="basic-button"
                 aria-controls="basic-menu"
-                size="large"
+                size="small"
                 color="inherit"
                 aria-label="Notifications"
                 onClick={handleClick}
@@ -102,7 +112,7 @@ export default function MenuBar(props) {
             </Menu>
 
             <IconButton
-                size="large"
+                size="small"
                 aria-label="Account Of Current User"
                 id="primary-search-account-button"
                 aria-controls="primary-search-account-menu"

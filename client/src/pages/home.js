@@ -29,7 +29,6 @@ export default function Home() {
     return (<Grid container spacing={4}>
         <Grid item xs={12} md={8}>
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
-                <Status />
                 {homePosts.loading ? <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <CircularProgress />
                 </Box> : (homePosts.result === 0 && homePosts.posts.length === 0) ? <Typography component='div' variant='h3' sx={{ textAlign: 'center' }}>No Post</Typography>
@@ -37,7 +36,6 @@ export default function Home() {
             </Box>
             <Box sx={{ display: { xs: 'none', sm: 'block' }, padding: '10px 40px' }}>
                 <Box sx={{ width: '100%' }} >
-                    <Status />
                     {homePosts.loading ? <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <CircularProgress />
                     </Box> : (homePosts.result === 0 && homePosts.posts.length === 0) ? <Typography component='div' variant='h3' sx={{ textAlign: 'center' }}>No Post</Typography>
