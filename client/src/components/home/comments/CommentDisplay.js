@@ -21,11 +21,10 @@ export default function CommentDisplay({ comment, post, replyCm }) {
                     post={post}
                     commentId={comment._id}
                 />))}
-
-                {replyCm.length - next > 0 ? <Box sx={{ cursor: 'pointer', color: 'crimson' }}
+                {replyCm.length - next > 0 ? <Box sx={{ mx: 1, cursor: 'pointer', color: 'crimson' }}
                     onClick={() => setNext(next + 10)}>
                     See more comments...
-                </Box> : replyCm.length > 1 && <Box sx={{ cursor: 'pointer', color: 'crimson' }}
+                </Box> : replyCm.length > 1 && <Box sx={{ mx: 1, cursor: 'pointer', color: 'crimson' }}
                     onClick={() => setNext(1)}>
                     Hide comments...
                 </Box>}

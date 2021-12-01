@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 
 import CardHeader from './home/post_card/CardHeader';
 import CardBody from './home/post_card/CardBody';
@@ -10,12 +10,13 @@ import InputComment from './home/InputComment';
 
 export default function PostCard({ post, theme }) {
 
-    return (<Card sx={{ my: 1 }}>
+    return (<Box sx={{ mb: 4, border: '1px solid #bfbfbf' }}>
         <CardHeader post={post} />
         <CardBody post={post} theme={theme} />
         <CardFooter post={post} />
 
         <Comments post={post} />
+        <Divider />
         <InputComment post={post} />
-    </Card>)
+    </Box>);
 }

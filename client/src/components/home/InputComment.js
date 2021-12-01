@@ -1,23 +1,24 @@
-import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { createComment } from '../../redux/actions/commentAction'
-import Icons from '../Icons'
+import * as React from 'react';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-const InputComment = ({children, post, onReply, setOnReply}) => {
-    const [content, setContent] = useState('')
+import { Box, Button, TextField } from '@mui/material';
 
-    const { auth, socket, theme } = useSelector(state => state)
-    const dispatch = useDispatch()
+import { createComment } from '../../redux/actions/commentAction';
+import Icons from '../Icons';
+
+export default function InputComment({ children, post, onReply, setOnReply }) {
+    const [content, setContent] = useState('');
+    const { auth, socket, theme } = useSelector(state => state);
+    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if(!content.trim()){
-            if(setOnReply) return setOnReply(false);
+        if (!content.trim()) {
+            if (setOnReply) return setOnReply(false);
             return;
         }
-
-        setContent('')
-        
+        setContent('');
         const newComment = {
             content,
             likes: [],
@@ -26,30 +27,27 @@ const InputComment = ({children, post, onReply, setOnReply}) => {
             reply: onReply && onReply.commentId,
             tag: onReply && onReply.user
         }
-        
-        dispatch(createComment({post, newComment, auth, socket}))
-
-        if(setOnReply) return setOnReply(false);
+        dispatch(createComment({ post, newComment, auth, socket }));
+        if (setOnReply) return setOnReply(false);
     }
 
-    return (
-        <form className="card-footer comment_input" onSubmit={handleSubmit} >
-            {children}
-            <input type="text" placeholder="Add your comments..."
-            value={content} onChange={e => setContent(e.target.value)}
-            style={{
-                filter: theme ? 'invert(1)' : 'invert(0)',
-                color: theme ? 'white' : '#111',
-                background: theme ? 'rgba(0,0,0,.03)' : '',
-            }} />
-
-            <Icons setContent={setContent} content={content} theme={theme} />
-
-            <button type="submit" className="postBtn">
-                Post
-            </button>
-        </form>
-    )
+    return (<Box component="form" onSubmit={handleSubmit} noValidate sx={{ my: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        {children}
+        <Icons setContent={setContent} content={content} theme={theme} />
+        <TextField
+            fullWidth
+            size='small'
+            label=''
+            placeholder="Add your comments..."
+            multiline
+            variant="outlined" 
+            value={content}
+            onChange={e => setContent(e.target.value)}
+        />
+        <Button
+            type="submit"
+            variant="text"
+            disabled={content ? false : true}
+        >Post</Button>
+    </Box>);
 }
-
-export default InputComment

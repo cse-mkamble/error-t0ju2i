@@ -2,11 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import { Box, Avatar, Typography, Link, IconButton } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import SystemUpdateAltOutlinedIcon from '@mui/icons-material/SystemUpdateAltOutlined';
-import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
+import { Box, Avatar, Typography, TextField, Link } from '@mui/material';
 
 import LikeButton from '../../LikeButton';
 import CommentMenu from './CommentMenu';
@@ -26,7 +22,6 @@ export default function CommentCard({ children, comment, post, commentId }) {
 
     const [onReply, setOnReply] = useState(false)
 
-
     useEffect(() => {
         setContent(comment.content)
         setIsLike(false)
@@ -44,7 +39,6 @@ export default function CommentCard({ children, comment, post, commentId }) {
             setOnEdit(false)
         }
     }
-
 
     const handleLike = async () => {
         if (loadLike) return;
@@ -64,7 +58,6 @@ export default function CommentCard({ children, comment, post, commentId }) {
         setLoadLike(false)
     }
 
-
     const handleReply = () => {
         if (onReply) return setOnReply(false)
         setOnReply({ ...comment, commentId })
@@ -79,8 +72,8 @@ export default function CommentCard({ children, comment, post, commentId }) {
     const styleCommentContent = {
         mt: '4px',
         p: 1,
-        background: '#eee',
-        borderRadius: '10px',
+        boxShadow: 3,
+        borderRadius: '20px',
         borderTopLeftRadius: 0
     }
 
@@ -92,39 +85,47 @@ export default function CommentCard({ children, comment, post, commentId }) {
         <Box sx={styleCommentContent}>
             <Box>
                 <Box sx={{ flex: 'auto' }}>
-                    {onEdit ? <textarea rows="5" value={content} onChange={e => setContent(e.target.value)} />
-                        : <Box>
-                            {comment.tag && comment.tag._id !== comment.user._id && <Link to={`/profile/${comment.tag._id}`} className="mr-1">
-                                @{comment.tag.username}
-                            </Link>}
-                            <Typography variant="body2" gutterBottom>
-                                {content.length < 100 ? content :
-                                    readMore ? content + ' ' : content.slice(0, 100) + '....'}
-                                {content.length > 100 && <span style={{ cursor: 'pointer', color: 'red' }} onClick={() => setReadMore(!readMore)}>
-                                    {readMore ? ' Hide Content' : ' Read More'}
-                                </span>}
-                            </Typography>
-                        </Box>}
+                    {onEdit ? <TextField
+                        fullWidth
+                        label=''
+                        multiline
+                        rows={4}
+                        value={content}
+                        onChange={e => setContent(e.target.value)}
+                    /> : <Box>
+                        {comment.tag && comment.tag._id !== comment.user._id && <Link to={`/profile/${comment.tag._id}`} >
+                            @{comment.tag.username}
+                        </Link>}
+                        <Box>
+                            {content.length < 100 ? content :
+                                readMore ? content + ' ' : content.slice(0, 100) + '....'}
+                            {content.length > 100 && <span style={{ cursor: 'pointer', color: 'red' }} onClick={() => setReadMore(!readMore)}>
+                                {readMore ? ' hide' : ' more'}
+                            </span>}
+                        </Box>
+                    </Box>}
                 </Box>
             </Box>
             <Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Typography variant='body2' sx={{ color: 'text.secondary' }}>{moment(comment.createdAt).fromNow()}</Typography>
-                        <Box sx={{ mx: 4 }}>
+                        <Box sx={{ mx: 2, display: 'flex' }}>
                             {onEdit ? <>
-                                <IconButton
-                                    size='small'
-                                    aria-label='Update Comment'
-                                    color='info'
+                                <Typography
+                                    variant="body2"
+                                    gutterBottom
+                                    color='primary'
                                     onClick={handleUpdate}
-                                ><SystemUpdateAltOutlinedIcon /></IconButton>
-                                <IconButton
-                                    size='small'
-                                    aria-label='Delete Comment'
+                                    sx={{ mr: 1, cursor: 'pointer' }}
+                                >Update</Typography>
+                                <Typography
+                                    variant="body2"
+                                    gutterBottom
                                     color='error'
                                     onClick={() => setOnEdit(false)}
-                                ><CancelOutlinedIcon /></IconButton>
+                                    sx={{ cursor: 'pointer' }}
+                                >Cancel</Typography>
                             </> : <Typography variant='body2' sx={{ cursor: 'pointer' }} onClick={handleReply} >{onReply ? 'Cancel' : 'Replay'}</Typography>}
                         </Box>
                     </Box>
@@ -135,66 +136,17 @@ export default function CommentCard({ children, comment, post, commentId }) {
                             handleLike={handleLike}
                             handleUnLike={handleUnLike}
                         />
-                        {/* <CommentMenu post={post} comment={comment} setOnEdit={setOnEdit} /> */}
+                        <CommentMenu post={post} comment={comment} setOnEdit={setOnEdit} />
                     </Box>
                 </Box>
             </Box>
         </Box>
 
-        {/* <div className="comment_content">
-            <div className="flex-fill"
-                style={{
-                    filter: theme ? 'invert(1)' : 'invert(0)',
-                    color: theme ? 'white' : '#111',
-                }}>
-
-                <div style={{ cursor: 'pointer' }}>
-                    <small className="text-muted mr-3">
-                        {moment(comment.createdAt).fromNow()}
-                    </small>
-
-                    <small className="font-weight-bold mr-3">
-                        {comment.likes.length} likes
-                    </small>
-
-                    {
-                        onEdit
-                            ? <>
-                                <small className="font-weight-bold mr-3"
-                                    onClick={handleUpdate}>
-                                    update
-                                </small>
-                                <small className="font-weight-bold mr-3"
-                                    onClick={() => setOnEdit(false)}>
-                                    cancel
-                                </small>
-                            </>
-
-                            : <small className="font-weight-bold mr-3"
-                                onClick={handleReply}>
-                                {onReply ? 'cancel' : 'reply'}
-                            </small>
-                    }
-
-                </div>
-
-            </div>
-
-
-            <div className="d-flex align-items-center mx-2" style={{ cursor: 'pointer' }}>
-                <CommentMenu post={post} comment={comment} setOnEdit={setOnEdit} />
-                <LikeButton isLike={isLike} handleLike={handleLike} handleUnLike={handleUnLike} />
-            </div>
-        </div> */}
-
-        {
-            onReply &&
-            <InputComment post={post} onReply={onReply} setOnReply={setOnReply} >
-                <Link to={`/profile/${onReply.user._id}`} className="mr-1">
-                    @{onReply.user.username}:
-                </Link>
-            </InputComment>
-        }
+        {onReply && <InputComment post={post} onReply={onReply} setOnReply={setOnReply} >
+            <Link to={`/profile/${onReply.user._id}`} sx={{ mr: 1 }}>
+                @{onReply.user.username}:
+            </Link>
+        </InputComment>}
 
         {children}
     </Box>);

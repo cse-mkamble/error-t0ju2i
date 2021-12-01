@@ -26,8 +26,8 @@ export default function Icons({ setContent, content, theme }) {
             <IconButton
                 id="basic-button"
                 aria-controls="basic-menu"
-                size="large"
-                color="primary"
+                size="small"
+                color="default"
                 aria-label="Notifications"
                 onClick={handleClick}
             >

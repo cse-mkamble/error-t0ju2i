@@ -43,7 +43,6 @@ export default function PostCardHeader({ post }) {
     }
 
     return (<Box>
-        <Divider />
         <CardHeader
             avatar={<Avatar src={post.user.avatar} />}
             action={<Box>
