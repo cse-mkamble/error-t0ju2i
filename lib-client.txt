@@ -30,4 +30,6 @@ npm install react-responsive-carousel --save
 npm install framer-motion
 npm install typescript
 
+npm install swiper --save
+
 cd ..
