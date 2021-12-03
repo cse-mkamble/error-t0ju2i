@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 import { follow, unfollow } from '../redux/actions/profileAction';
-import { MESS_TYPES, getConversations } from '../redux/actions/messageAction';
+import { MESS_TYPES } from '../redux/actions/messageAction';
 
 export default function FollowBtn({ user }) {
     const [followed, setFollowed] = useState(false);

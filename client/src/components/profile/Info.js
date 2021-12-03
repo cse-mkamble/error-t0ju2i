@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { Box, Avatar, Button, Typography, Divider } from '@mui/material';
 
-// import Avatar from '../Avatar'
 import EditProfile from './EditProfile'
 import FollowBtn from '../FollowBtn'
 import Followers from './Followers'
@@ -83,16 +82,27 @@ export default function Info({ id, auth, profile, dispatch }) {
                     <Typography fullWidth sx={{ fontWeight: 'bold', color: 'black', fontSize: '14px' }} >{user.followers.length}</Typography>
                     <Typography fullWidth sx={{ fontSize: '14px' }}>Post</Typography>
                 </Box> */}
-                <Box>
+                <Box sx={{ cursor: 'default' }} onClick={() => setShowFollowers(true)}>
                     <Typography fullWidth sx={{ fontWeight: 'bold', color: 'black', fontSize: '14px' }} >{user.followers.length}</Typography>
                     <Typography fullWidth sx={{ fontSize: '14px' }}>Follower</Typography>
                 </Box>
-                <Box>
+                <Box sx={{ cursor: 'default' }} onClick={() => setShowFollowing(true)}>
                     <Typography fullWidth sx={{ fontWeight: 'bold', color: 'black', fontSize: '14px' }} >{user.following.length}</Typography>
                     <Typography fullWidth sx={{ fontSize: '14px' }}>Following</Typography>
                 </Box>
             </Box>
             <Divider />
+
+            {onEdit && <EditProfile setOnEdit={setOnEdit} />}
+
+            {showFollowers && <Followers
+                users={user.followers}
+                setShowFollowers={setShowFollowers}
+            />}
+            {showFollowing && <Following
+                users={user.following}
+                setShowFollowing={setShowFollowing}
+            />}
 
 
             {/* <div className="info_content">
