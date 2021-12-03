@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { Box, Avatar, Button, Typography } from '@mui/material';
+import { Box, Avatar, Button, Typography, Divider } from '@mui/material';
 
 // import Avatar from '../Avatar'
 import EditProfile from './EditProfile'
@@ -51,20 +51,20 @@ export default function Info({ id, auth, profile, dispatch }) {
     }
 
     return (<Box>
-        {userData.map(user => (<Box key={user._id}>
-            <Box sx={{ display: 'flex', }}>
-                <Box sx={{ width: '120px', p: 1 }} >
+        {userData.map(user => (<Box key={user._id} >
+            <Box sx={{ display: 'flex', mb: 1 }}>
+                <Box sx={{ width: '100px', p: 1 }} >
                     <Box sx={{ my: 2, display: 'flex', justifyContent: 'center' }}>
                         <Avatar
                             alt=""
                             src={user.avatar}
-                            sx={{ height: 80, width: 80 }}
+                            sx={{ height: 86, width: 86 }}
                         ></Avatar>
                     </Box>
                     <Typography sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: '14px' }}>{user.fullname}</Typography>
                 </Box>
-                <Box sx={{ width: 'calc(100% - 120px)', pr: 1 }}>
-                    <Typography fullWidth component='div' sx={{ mt: 3, fontSize: '22px' }}>{user.username}</Typography>
+                <Box sx={{ width: 'calc(100% - 100px)', pr: 1 }}>
+                    <Typography fullWidth component='div' sx={{ mt: 3, fontSize: '20px' }}>{user.username}</Typography>
                     {user._id === auth.user._id
                         ? <Button
                             fullWidth
@@ -77,6 +77,22 @@ export default function Info({ id, auth, profile, dispatch }) {
                         : <FollowBtn user={user} />}
                 </Box>
             </Box>
+            <Divider />
+            <Box sx={{ my: 1, display: 'flex', justifyContent: 'space-around', color: 'darkgray', textAlign: 'center' }}>
+                {/* <Box>
+                    <Typography fullWidth sx={{ fontWeight: 'bold', color: 'black', fontSize: '14px' }} >{user.followers.length}</Typography>
+                    <Typography fullWidth sx={{ fontSize: '14px' }}>Post</Typography>
+                </Box> */}
+                <Box>
+                    <Typography fullWidth sx={{ fontWeight: 'bold', color: 'black', fontSize: '14px' }} >{user.followers.length}</Typography>
+                    <Typography fullWidth sx={{ fontSize: '14px' }}>Follower</Typography>
+                </Box>
+                <Box>
+                    <Typography fullWidth sx={{ fontWeight: 'bold', color: 'black', fontSize: '14px' }} >{user.following.length}</Typography>
+                    <Typography fullWidth sx={{ fontSize: '14px' }}>Following</Typography>
+                </Box>
+            </Box>
+            <Divider />
 
 
             {/* <div className="info_content">

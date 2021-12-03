@@ -1,16 +1,20 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 
-import { Box, Button } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 
 import { follow, unfollow } from '../redux/actions/profileAction';
+import { MESS_TYPES, getConversations } from '../redux/actions/messageAction';
 
 export default function FollowBtn({ user }) {
     const [followed, setFollowed] = useState(false);
 
     const { auth, profile, socket } = useSelector(state => state);
     const dispatch = useDispatch();
+    const _dispatch = useDispatch();
+    const history = useHistory();
 
     const [load, setLoad] = useState(false);
 
@@ -38,11 +42,20 @@ export default function FollowBtn({ user }) {
         setLoad(false);
     }
 
-    return (
-        <Box>
-            {followed ? <Button variant="outlined" color="error" onClick={handleUnFollow}>UnFollow</Button>
-                : <Button variant="outlined" color="info" onClick={handleFollow}>Follow</Button>
-            }
-        </Box>
-    );
+    const handleAddUser = (user) => {
+        _dispatch({ type: MESS_TYPES.ADD_USER, payload: { ...user, text: '', media: [] } })
+        // dispatch({ type: MESS_TYPES.CHECK_ONLINE_OFFLINE, payload: online })
+        return history.push(`/message/${user._id}`)
+    }
+
+    return (<Box>
+        {followed ? <Box sx={{ display: 'flex' }}>
+            <Box key={user._id} sx={{ width: '50%', pr: 1 }}>
+                <Button size='small' fullWidth variant="contained" color="info" onClick={() => handleAddUser(user)}>Message</Button>
+            </Box>
+            <Box sx={{ width: '50%' }}>
+                <Button size='small' fullWidth variant="outlined" color="error" onClick={handleUnFollow}>UnFollow</Button>
+            </Box>
+        </Box> : <Button size='small' fullWidth variant="contained" color="info" onClick={handleFollow}>Follow</Button>}
+    </Box>);
 }
