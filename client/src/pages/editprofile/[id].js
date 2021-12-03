@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { useHistory } from "react-router-dom";
 import {
     Box,
     Button,
@@ -14,13 +14,13 @@ import {
     Radio,
     InputAdornment
 } from '@mui/material';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
 
 import { checkImage } from '../../utils/imageUpload';
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 import { updateProfileUser } from '../../redux/actions/profileAction';
 
-export default function EditProfile({ setOnEdit }) {
+export default function EditProfile() {
     const initState = {
         fullname: '', mobile: '', address: '', website: '', story: '', gender: ''
     }
@@ -31,8 +31,10 @@ export default function EditProfile({ setOnEdit }) {
 
     const { auth, theme } = useSelector(state => state);
     const dispatch = useDispatch();
+    let history = useHistory();
 
     useEffect(() => {
+        console.log(auth.user)
         setUserData(auth.user);
     }, [auth.user]);
 
@@ -51,28 +53,30 @@ export default function EditProfile({ setOnEdit }) {
         setUserData({ ...userData, [name]: value });
     }
 
+    const handleChangeInput = e => {
+        const { name, value } = e.target
+        setUserData({ ...userData, [name]: value })
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
         dispatch(updateProfileUser({ userData, avatar, auth }));
+        history.goBack();
     }
 
     return (<Box sx={{
-        mt: 8,
-        top: 0,
-        left: 0,
         width: '100%',
         background: '#fff'
     }} >
         <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
-            <Box sx={{ direction: 'rtl' }}>
+            <Box>
                 <IconButton
                     size='small'
                     color='error'
-                    onClick={() => setOnEdit(false)}
-                    sx={{ mt: 1 }}
-                ><CloseOutlinedIcon /></IconButton>
+                    onClick={history.goBack}
+                ><KeyboardBackspaceOutlinedIcon />Back</IconButton>
             </Box>
-            <Box component="form" noValidate onSubmit={handleSubmit}>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ px: 2 }}>
                 <div className="info_avatar">
                     <img src={avatar ? URL.createObjectURL(avatar) : auth.user.avatar}
                         alt="avatar" style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
@@ -87,6 +91,7 @@ export default function EditProfile({ setOnEdit }) {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
+                                size='small'
                                 required
                                 fullWidth
                                 label="Full Name"
@@ -101,6 +106,7 @@ export default function EditProfile({ setOnEdit }) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                size='small'
                                 required
                                 fullWidth
                                 label="Mobile"
@@ -112,6 +118,7 @@ export default function EditProfile({ setOnEdit }) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                size='small'
                                 required
                                 fullWidth
                                 label="Address"
@@ -123,6 +130,7 @@ export default function EditProfile({ setOnEdit }) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                size='small'
                                 required
                                 fullWidth
                                 label="Website"
@@ -134,6 +142,7 @@ export default function EditProfile({ setOnEdit }) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                size='small'
                                 required
                                 fullWidth
                                 multiline
@@ -148,12 +157,11 @@ export default function EditProfile({ setOnEdit }) {
                                 }}
                             />
                         </Grid>
-
                         <Grid item xs={12}>
                             <div style={{ padding: '10px', border: '1px solid #c4c4c4', borderRadius: '5px' }}>
                                 <FormLabel component="legend">Gender</FormLabel>
                                 <RadioGroup required style={{ justifyContent: 'space-between' }}
-                                    fullWidth row aria-label="gender" defaultValue="female" name="gender" >
+                                    fullWidth row aria-label="gender" defaultValue={auth.user.gender} name="gender" onChange={handleChangeInput} >
                                     <FormControlLabel value="female" control={<Radio />} label="Female" />
                                     <FormControlLabel value="male" control={<Radio />} label="Male" />
                                     <FormControlLabel value="other" control={<Radio />} label="Other" />
@@ -165,19 +173,19 @@ export default function EditProfile({ setOnEdit }) {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 2 }}
+                        sx={{ my: 4 }}
                     >Save</Button>
                 </Box>
             </Box>
         </Box>
-        <Box sx={{ display: { xs: 'none', sm: 'block' }, padding: '10px 200px' }}>
-            <Box sx={{ direction: 'rtl' }}>
+        <Box sx={{ display: { xs: 'none', sm: 'block' }, padding: '10px 300px' }}>
+            <Box>
                 <IconButton
                     size='small'
                     color='error'
-                    onClick={() => setOnEdit(false)}
+                    onClick={history.goBack}
                     sx={{ mt: 1 }}
-                ><CloseOutlinedIcon /></IconButton>
+                ><KeyboardBackspaceOutlinedIcon />Back</IconButton>
             </Box>
             <Box component="form" noValidate onSubmit={handleSubmit}>
                 <div className="info_avatar">
@@ -194,6 +202,7 @@ export default function EditProfile({ setOnEdit }) {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
+                                size='small'
                                 required
                                 fullWidth
                                 label="Full Name"
@@ -208,6 +217,7 @@ export default function EditProfile({ setOnEdit }) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                size='small'
                                 required
                                 fullWidth
                                 label="Mobile"
@@ -219,6 +229,7 @@ export default function EditProfile({ setOnEdit }) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                size='small'
                                 required
                                 fullWidth
                                 label="Address"
@@ -230,6 +241,7 @@ export default function EditProfile({ setOnEdit }) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                size='small'
                                 required
                                 fullWidth
                                 label="Website"
@@ -241,6 +253,7 @@ export default function EditProfile({ setOnEdit }) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                size='small'
                                 required
                                 fullWidth
                                 multiline
@@ -255,12 +268,11 @@ export default function EditProfile({ setOnEdit }) {
                                 }}
                             />
                         </Grid>
-
                         <Grid item xs={12}>
                             <div style={{ padding: '10px', border: '1px solid #c4c4c4', borderRadius: '5px' }}>
                                 <FormLabel component="legend">Gender</FormLabel>
                                 <RadioGroup required style={{ justifyContent: 'space-between' }}
-                                    fullWidth row aria-label="gender" defaultValue="female" name="gender" >
+                                    fullWidth row aria-label="gender" defaultValue={auth.user.gender} name="gender" onChange={handleChangeInput} >
                                     <FormControlLabel value="female" control={<Radio />} label="Female" />
                                     <FormControlLabel value="male" control={<Radio />} label="Male" />
                                     <FormControlLabel value="other" control={<Radio />} label="Other" />
@@ -272,7 +284,7 @@ export default function EditProfile({ setOnEdit }) {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 2 }}
+                        sx={{ my: 4 }}
                     >Save</Button>
                 </Box>
             </Box>

@@ -70,7 +70,8 @@ export default function Info({ id, auth, profile, dispatch }) {
                             size='small'
                             variant="outlined"
                             color='inherit'
-                            onClick={() => setOnEdit(true)}
+                            // onClick={() => setOnEdit(true)}
+                            href={`/editprofile/{auth.user._id}`}
                             sx={{ textTransform: 'none' }}
                         >Edit Profile</Button>
                         : <FollowBtn user={user} />}
