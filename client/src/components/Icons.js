@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Box, IconButton, Menu, MenuItem } from '@mui/material';
+import { Box, IconButton, Menu } from '@mui/material';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 
 export default function Icons({ setContent, content, theme }) {

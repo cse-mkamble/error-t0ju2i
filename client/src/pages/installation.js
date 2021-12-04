@@ -1,5 +1,4 @@
 import React from "react"
-import Avatar from '../components/Avatar'
 import { useSelector } from 'react-redux'
 
 const Installation = () => {
@@ -9,7 +8,7 @@ const Installation = () => {
         <div>
             <div style={{ display: 'flex', justifyContent: 'center' }} >
                 <div>
-                    <img style={{
+                    <img alt='' style={{
                         filter: theme ? 'invert(1)' : 'invert(0)',
                         color: theme ? 'white' : '#111',
                         width: '64px', height: '64px', margin: '10px'
@@ -30,11 +29,11 @@ const Installation = () => {
                             <p>Please follow this steps.</p>
                             <ol>
                                 <li>In the top right, click the Customize and control Google Chrome icon ( three dot ).</li>
-                                <div style={{ width: 'calc(100% - 600px)', padding: '10px' }}><img style={{ width: '300px', filter: theme ? 'invert(1)' : 'invert(0)' }} src="https://res.cloudinary.com/mayurkamble/image/upload/v1625834596/how-to-home-button-google-chrome-1_m7rf4s.jpg" /></div>
+                                <div style={{ width: 'calc(100% - 600px)', padding: '10px' }}><img alt='' style={{ width: '300px', filter: theme ? 'invert(1)' : 'invert(0)' }} src="https://res.cloudinary.com/mayurkamble/image/upload/v1625834596/how-to-home-button-google-chrome-1_m7rf4s.jpg" /></div>
                                 <li>Then click Install App.</li>
-                                <div style={{ width: 'calc(100% - 800px)', padding: '10px' }}><img style={{ width: '200px', filter: theme ? 'invert(1)' : 'invert(0)' }} src="https://res.cloudinary.com/mayurkamble/image/upload/v1625834614/WhatsApp_Image_2021-07-09_at_18.12.00_p2no3e.jpg" /></div>
+                                <div style={{ width: 'calc(100% - 800px)', padding: '10px' }}><img alt='' style={{ width: '200px', filter: theme ? 'invert(1)' : 'invert(0)' }} src="https://res.cloudinary.com/mayurkamble/image/upload/v1625834614/WhatsApp_Image_2021-07-09_at_18.12.00_p2no3e.jpg" /></div>
                                 <li>Finally, Click on Install.</li>
-                                <div style={{ width: 'calc(100% - 800px)', padding: '10px' }}><img style={{ width: '200px', filter: theme ? 'invert(1)' : 'invert(0)' }} src="https://res.cloudinary.com/mayurkamble/image/upload/v1625834623/WhatsApp_Image_2021-07-09_at_18.12.00_1_lsbggu.jpg" /></div>
+                                <div style={{ width: 'calc(100% - 800px)', padding: '10px' }}><img alt='' style={{ width: '200px', filter: theme ? 'invert(1)' : 'invert(0)' }} src="https://res.cloudinary.com/mayurkamble/image/upload/v1625834623/WhatsApp_Image_2021-07-09_at_18.12.00_1_lsbggu.jpg" /></div>
                             </ol>
                         </div>
                     </div>

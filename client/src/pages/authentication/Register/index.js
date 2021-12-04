@@ -3,31 +3,16 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { Button, Grid, Box, Container, FormLabel, Typography, Alert, TextField } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 
-import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-
-import SendIcon from '@mui/icons-material/Send';
-import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 import { registerSendMail, register } from '../../../redux/actions/authAction';
 
-import OtpInput from '../../../components/UI/OTPInput';
-
 import RegisterForm from './RegisterForm';
 import VerifyOTP from './VerifyOTP';
-
-import { GLOBALTYPES } from '../../../redux/actions/globalTypes';
-import Toast from '../../../components/alert/Toast';
 
 function Copyright(props) {
     return (
@@ -51,8 +36,6 @@ export default function Register() {
     };
 
     const [activeStep, setActiveStep] = useState(0);
-
-    const [show_password, setShowPassword] = useState('password');
 
     const { auth, alert } = useSelector(state => state);
     const dispatch = useDispatch();

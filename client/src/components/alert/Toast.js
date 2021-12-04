@@ -19,7 +19,7 @@ const Toast = ({ msg, handleShow, severityType }) => {
         <Collapse in={open}>
             <Stack sx={{ width: '100%' }} spacing={2}>
                 <div
-                    style={{ top: '5px', right: '5px', minWidth: '300px', position: 'fixed', zIndex: 50 }}
+                    style={{ top: '70px', right: '5px', minWidth: '300px', position: 'fixed', zIndex: 50 }}
                 >
                     <Alert
                         variant="filled"

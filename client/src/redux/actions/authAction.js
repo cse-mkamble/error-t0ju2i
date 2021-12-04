@@ -1,7 +1,6 @@
 import { GLOBALTYPES } from './globalTypes'
 import { postDataAPI } from '../../utils/fetchData'
 import valid from '../../utils/valid'
-import axios from 'axios'
 import validator from 'validator';
 
 export const login = (data) => async (dispatch) => {

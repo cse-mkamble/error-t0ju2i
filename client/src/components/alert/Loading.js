@@ -8,7 +8,7 @@ const Loading = () => {
         >
 
             <div style={{ display: 'grid' }}>
-                <img src={imgLoading} />
+                <img src={imgLoading} alt='' />
                 <text style={{ fontSize: '26px', marginTop: '20px', fontWeight: 'bold' }} fill="#fff" x="5" y="47">Loading ...</text>
             </div>
 

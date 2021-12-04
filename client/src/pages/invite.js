@@ -1,20 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import Avatar from '../components/Avatar'
+import React from 'react'
 import { useSelector } from 'react-redux'
 
 import ShareModal from '../components/ShareModalForInvite'
 import { BASE_URL } from '../utils/config'
 
 const Installation = () => {
-    const { theme } = useSelector(state => state)
-
-    const [isShare, setIsShare] = useState(false)
+    const { theme } = useSelector(state => state);
 
     return (
         <div>
             <div style={{ display: 'flex', justifyContent: 'center' }} >
                 <div>
-                    <img style={{
+                    <img alt='' style={{
                         filter: theme ? 'invert(1)' : 'invert(0)',
                         color: theme ? 'white' : '#111',
                         width: '64px', height: '64px', margin: '10px'
@@ -39,7 +36,7 @@ const Installation = () => {
                             padding: '5px'
                         }}>
                             <div style={{ textAlign: 'center' }}>
-                                <img style={{
+                                <img alt='' style={{
                                     filter: theme ? 'invert(1)' : 'invert(0)',
                                     color: theme ? 'white' : '#111',
                                     width: '64px',
@@ -53,7 +50,7 @@ const Installation = () => {
                                 background: '#fff',
                                 borderRadius: '10px'
                             }} >
-                                <img style={{
+                                <img alt='' style={{
                                     filter: theme ? 'invert(1)' : 'invert(0)',
                                     color: theme ? 'white' : '#111',
                                     width: '100px',

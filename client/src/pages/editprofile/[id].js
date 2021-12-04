@@ -161,7 +161,7 @@ export default function EditProfile() {
                             <div style={{ padding: '10px', border: '1px solid #c4c4c4', borderRadius: '5px' }}>
                                 <FormLabel component="legend">Gender</FormLabel>
                                 <RadioGroup required style={{ justifyContent: 'space-between' }}
-                                    fullWidth row aria-label="gender" defaultValue={auth.user.gender} name="gender" onChange={handleChangeInput} >
+                                    fullWidth row aria-label="gender" id="gender" defaultValue={auth.user.gender} name="gender" value={gender} onChange={handleChangeInput} >
                                     <FormControlLabel value="female" control={<Radio />} label="Female" />
                                     <FormControlLabel value="male" control={<Radio />} label="Male" />
                                     <FormControlLabel value="other" control={<Radio />} label="Other" />

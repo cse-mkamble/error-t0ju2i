@@ -1,7 +1,6 @@
 import React from 'react';
-import { useState } from "react";
 
-import { Button, Grid, Box, Container, FormLabel, Typography, Alert, TextField } from "@mui/material";
+import { Button, Grid, Box, Container, FormLabel, Alert } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 
 import OtpInput from "../../../components/UI/OTPInput";

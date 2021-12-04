@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { Grid, Box, CircularProgress, Typography } from '@mui/material';
 
-import Status from '../components/home/Status';
+// import Status from '../components/home/Status';
 import Posts from '../components/home/Posts';
 import RightSideBar from '../components/home/RightSideBar';
 
