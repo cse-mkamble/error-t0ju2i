@@ -78,11 +78,11 @@ export default function Info({ id, auth, profile, dispatch }) {
                 </Box> */}
                     <Box sx={{ cursor: 'default' }} onClick={() => setShowFollowers(true)}>
                         <Typography fullWidth sx={{ fontWeight: 'bold', color: 'black', fontSize: '14px' }} >{user.followers.length}</Typography>
-                        <Typography fullWidth sx={{ fontSize: '14px' }}>Follower</Typography>
+                        <Typography fullWidth sx={{ fontSize: '14px' }}>follower</Typography>
                     </Box>
                     <Box sx={{ cursor: 'default' }} onClick={() => setShowFollowing(true)}>
                         <Typography fullWidth sx={{ fontWeight: 'bold', color: 'black', fontSize: '14px' }} >{user.following.length}</Typography>
-                        <Typography fullWidth sx={{ fontSize: '14px' }}>Following</Typography>
+                        <Typography fullWidth sx={{ fontSize: '14px' }}>following</Typography>
                     </Box>
                 </Box>
             </Box>

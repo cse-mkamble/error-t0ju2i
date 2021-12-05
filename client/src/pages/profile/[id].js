@@ -2,18 +2,22 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, IconButton, Divider } from '@mui/material';
+import GridOnOutlinedIcon from '@mui/icons-material/GridOnOutlined';
+import TableRowsOutlinedIcon from '@mui/icons-material/TableRowsOutlined';
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 
-import Info from '../../components/profile/Info'
-import Posts from '../../components/profile/Posts'
-import Saved from '../../components/profile/Saved'
-import { getProfileUsers } from '../../redux/actions/profileAction'
+import Info from '../../components/profile/Info';
+import PostsInGrid from '../../components/profile/PostsInGrid';
+import Posts from '../../components/profile/Posts';
+import Saved from '../../components/profile/Saved';
+import { getProfileUsers } from '../../redux/actions/profileAction';
 
 export default function Profile() {
     const { profile, auth } = useSelector(state => state);
     const dispatch = useDispatch();
     const { id } = useParams();
-    const [saveTab, setSaveTab] = useState(false);
+    const [activeTab, setActiveTab] = useState('GridViewPost');
 
     useEffect(() => {
         if (profile.ids.every(item => item !== id)) {
@@ -23,15 +27,36 @@ export default function Profile() {
 
     return (<Box>
         <Info auth={auth} profile={profile} dispatch={dispatch} id={id} />
-        {auth.user._id === id && <div className="profile_tab">
-            <button className={saveTab ? '' : 'active'} onClick={() => setSaveTab(false)}>Posts</button>
-            <button className={saveTab ? 'active' : ''} onClick={() => setSaveTab(true)}>Saved</button>
-        </div>}
-        {profile.loading ? <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <CircularProgress />
-        </Box> : <>
-            {saveTab ? <Saved auth={auth} dispatch={dispatch} />
-                : <Posts auth={auth} profile={profile} dispatch={dispatch} id={id} />}
-        </>}
+        <Box>
+            <Divider />
+            <Box sx={{ maxWidth: '500px', m: 'auto', py: '10px' }}>
+                {auth.user._id === id ? <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                    <IconButton
+                        color={activeTab === 'GridViewPost' ? 'primary' : 'default'}
+                        onClick={() => setActiveTab('GridViewPost')} ><GridOnOutlinedIcon /></IconButton>
+                    <IconButton
+                        color={activeTab === 'RowViewPost' ? 'primary' : 'default'}
+                        onClick={() => setActiveTab('RowViewPost')} ><TableRowsOutlinedIcon /></IconButton>
+                    <IconButton
+                        color={activeTab === 'ViewBookmark' ? 'primary' : 'default'}
+                        onClick={() => setActiveTab('ViewBookmark')} ><BookmarkBorderOutlinedIcon /></IconButton>
+                </Box> : <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                    <IconButton
+                        color={activeTab === 'GridViewPost' ? 'primary' : 'default'}
+                        onClick={() => setActiveTab('GridViewPost')} ><GridOnOutlinedIcon /></IconButton>
+                    <IconButton
+                        color={activeTab === 'RowViewPost' ? 'primary' : 'default'}
+                        onClick={() => setActiveTab('RowViewPost')} ><TableRowsOutlinedIcon /></IconButton>
+                </Box>}
+            </Box>
+            <Divider />
+            {profile.loading ? <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CircularProgress />
+            </Box> : <>
+                {activeTab === 'GridViewPost' && <PostsInGrid auth={auth} profile={profile} dispatch={dispatch} id={id} />}
+                {activeTab === 'RowViewPost' && <Posts auth={auth} profile={profile} dispatch={dispatch} id={id} />}
+                {activeTab === 'ViewBookmark' && <Saved auth={auth} dispatch={dispatch} />}
+            </>}
+        </Box>
     </Box>);
 }

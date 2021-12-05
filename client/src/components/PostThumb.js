@@ -1,38 +1,39 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import * as React from 'react';
+import { Box, Typography, Link, IconButton } from '@mui/material';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 
-const PostThumb = ({posts, result}) => {
-    const { theme } = useSelector(state => state)
+export default function PostThumb({ posts, result }) {
+    if (result === 0) {
+        return (<Box color='error' sx={{ my: 1, display: 'flex', justifyContent: 'center' }} >
+            <Typography>No Post</Typography>
+        </Box>);
+    }
 
-    if(result === 0) return <h2 className="text-center text-danger">No Post</h2>
+    return (<Box>
+        {posts.map(post => (
+            <Link sx={{ cursor: 'pointer' }} key={post._id} href={`/post/${post._id}`}>
+                <div className="post_thumb_display">
+                    {post.images[0].url.match(/video/i)
+                        ? <video controls src={post.images[0].url} alt={post.images[0].url} />
+                        : <img src={post.images[0].url} alt={post.images[0].url} />}
 
-    return (
-        <div className="post_thumb">
-            {
-                posts.map(post => (
-                    <Link key={post._id} to={`/post/${post._id}`}>
-                        <div className="post_thumb_display">
-
-                            {
-                                post.images[0].url.match(/video/i)
-                                ?<video controls src={post.images[0].url} alt={post.images[0].url}
-                                style={{filter: theme ? 'invert(1)' : 'invert(0)'}} />
-
-                                :<img src={post.images[0].url} alt={post.images[0].url}
-                                style={{filter: theme ? 'invert(1)' : 'invert(0)'}} />
-                            }
-
-                            <div className="post_thumb_menu">
-                                <i className="far fa-heart">{post.likes.length}</i>
-                                <i className="far fa-comment">{post.comments.length}</i>
-                            </div>
-                        </div>
-                    </Link>
-                ))
-            }
-        </div>
-    )
+                    <div className="post_thumb_menu">
+                        <Box sx={{ display: 'flex' }} >
+                            {post.likes.length}
+                            <IconButton size='large' color='inherit' >
+                                <FavoriteBorderOutlinedIcon fontSize="inherit" />
+                            </IconButton>
+                        </Box>
+                        <Box sx={{ display: 'flex' }}>
+                            {post.comments.length}
+                            <IconButton size='large' color='inherit' >
+                                <ModeCommentOutlinedIcon fontSize="inherit" />
+                            </IconButton>
+                        </Box>
+                    </div>
+                </div>
+            </Link>
+        ))}
+    </Box>);
 }
-
-export default PostThumb

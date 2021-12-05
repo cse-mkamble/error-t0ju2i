@@ -2,14 +2,14 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 
-import PostThumb from '../PostThumb';
+import PostThumbInGrid from '../PostThumbInGrid';
 import LoadingRole from '../LoadingRole';
 import LoadMoreBtn from '../LoadMoreBtn';
 
 import { getDataAPI } from '../../utils/fetchData'
 import { PROFILE_TYPES } from '../../redux/actions/profileAction'
 
-export default function Posts({ auth, id, dispatch, profile }) {
+export default function PostsInGrid({ auth, id, dispatch, profile }) {
     const [posts, setPosts] = useState([]);
     const [result, setResult] = useState(9);
     const [page, setPage] = useState(0);
@@ -33,8 +33,8 @@ export default function Posts({ auth, id, dispatch, profile }) {
         setLoad(false);
     }
 
-    return (<Box sx={{ maxWidth: '500px', m: 'auto' }} >
-        <PostThumb posts={posts} result={result} />
+    return (<Box>
+        <PostThumbInGrid posts={posts} result={result} />
         {load && <LoadingRole />}
         <LoadMoreBtn result={result} page={page}
             load={load} handleLoadMore={handleLoadMore} />
