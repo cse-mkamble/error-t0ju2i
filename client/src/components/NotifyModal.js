@@ -75,7 +75,7 @@ export default function NotifyModal() {
                 {
                     notify.data.map((msg, index) => (
                         <div key={index} style={{ marginBottom: '10px', padding: '0 10px' }} >
-                            <Link to={`${msg.url}`} underline="none" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'black' }} >
+                            <Link href={`${msg.url}`} underline="none" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'black' }} >
                                 <Avatar src={msg.user.avatar} />
 
                                 <div style={{ margin: '10px', flex: 'fill' }}>
