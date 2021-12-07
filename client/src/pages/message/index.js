@@ -1,25 +1,26 @@
-import React from 'react'
-import LeftSide from '../../components/message/LeftSide'
+import * as React from 'react';
+import { Box, Grid, Typography } from '@mui/material';
+import LeftSide from '../../components/message/LeftSide';
 
-const Message = () => {
-    return (
-        <div className="message d-flex">
-            <div className="col-md-4 border-right px-0">
-                <LeftSide />
-            </div>
-
-            <div className="col-md-8 px-0 right_mess">
-                <div className="d-flex justify-content-center 
-                align-items-center flex-column h-100">
-
-                    <i className="fab fa-facebook-messenger text-primary"
-                    style={{fontSize: '5rem'}} />
-                    <h4>Messenger</h4>
-
-                </div>
-            </div>
-        </div>
-    )
+export default function Message() {
+    return (<Grid container spacing={0} sx={{
+        display: 'flex',
+        width: '100%',
+        height: 'calc(100vh - 100px)',
+        border: '1px solid #ddd',
+        borderRadius: '3px',
+        background: 'white',
+        ml: 0
+    }} >
+        <Grid item xs={12} md={4} sx={{ width: '100%', height: '100%', overflow: 'hidden' }} >
+            <LeftSide />
+        </Grid>
+        <Grid item xs={12} md={8} sx={{ display: { xs: 'none', md: 'block' } }} >
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 'column', height: '100%' }}>
+                <i className="fab fa-facebook-messenger"
+                    style={{ fontSize: '5rem', color: 'dodgerblue' }} />
+                <Typography variant='h4' sx={{ mx: 1 }}>Messenger</Typography>
+            </Box>
+        </Grid>
+    </Grid >);
 }
-
-export default Message

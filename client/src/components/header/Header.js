@@ -36,7 +36,7 @@ export default function HeaderBar() {
                     <MenuBar />
                 </Toolbar>
             </AppBar>
-            <Box sx={{ mt: 10 }}></Box>
+            <Box sx={{ pt: 10 }}></Box>
         </Box>
     )
 }

@@ -36,8 +36,8 @@ export default function UserCard({ children, user, border, handleClose, setShowF
         )
     }
 
-    return (
-        <Box sx={{ width: '100%', padding: '10px', display: 'flex', justifyContent: 'space-between', alignItem: 'center' }}>
+    return (<Box sx={{ width: '100%', padding: '10px', display: 'flex', justifyContent: 'space-between', alignItem: 'center' }}>
+        <Box>
             <Link sx={{ display: 'flex', alignItems: 'center' }} href={`/profile/${user._id}`} underline="none" onClick={handleCloseAll}>
                 <Avatar alt="" src={user.avatar} />
                 <Box sx={{ marginLeft: '5px', transform: 'translateY(-2px)' }}>
@@ -49,7 +49,7 @@ export default function UserCard({ children, user, border, handleClose, setShowF
                     </small>
                 </Box>
             </Link>
-            {children}
         </Box>
-    );
+        {children}
+    </Box>);
 }

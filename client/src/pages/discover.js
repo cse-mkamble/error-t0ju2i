@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box } from '@mui/material';
 import { getDiscoverPosts, DISCOVER_TYPES } from '../redux/actions/discoverAction';
 import LoadingRole from "../components/LoadingRole";
-import PostThumb from '../components/PostThumb'
-import LoadMoreBtn from '../components/LoadMoreBtn'
-import { getDataAPI } from '../utils/fetchData'
+import PostThumb from '../components/PostThumb';
+import LoadMoreBtn from '../components/LoadMoreBtn';
+import { getDataAPI } from '../utils/fetchData';
 
 export default function Discover() {
     const { auth, discover } = useSelector(state => state);

@@ -33,7 +33,7 @@ export default function PostsInGrid({ auth, id, dispatch, profile }) {
         setLoad(false);
     }
 
-    return (<Box>
+    return (<Box sx={{ maxWidth: '800px', m: 'auto' }} >
         <PostThumbInGrid posts={posts} result={result} />
         {load && <LoadingRole />}
         <LoadMoreBtn result={result} page={page}
