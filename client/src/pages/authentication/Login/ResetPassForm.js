@@ -17,7 +17,7 @@ export default function ResetPassForm(props) {
     const [show_password, setShowPassword] = useState('password');
 
     return (
-        <React.Fragment>
+        <Box>
             <Typography component="h1" variant="h5" sx={{ mt: 3 }}>
                 <div style={{ width: '100%' }} >Reset Password</div>
             </Typography>
@@ -70,6 +70,6 @@ export default function ResetPassForm(props) {
                 </Button>
 
             </Box>
-        </React.Fragment >
+        </Box >
     );
 }

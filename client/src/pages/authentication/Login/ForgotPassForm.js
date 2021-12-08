@@ -19,7 +19,7 @@ export default function ForgotPassForm(props) {
     const [OTPInputShow, setOTPInputShow] = useState(false);
 
     return (
-        <React.Fragment>
+        <Box>
             <Typography component="h1" variant="h5" sx={{ mt: 3 }}>
                 <div style={{ width: '100%' }} >Forgot Password</div>
             </Typography>
@@ -49,7 +49,7 @@ export default function ForgotPassForm(props) {
                 >{sentMail ? 'Resend OTP' : 'Send OTP'}</Button>
 
                 {fpass.success ?
-                    <React.Fragment>
+                    <Box>
                         <Container sx={{ mt: 2 }}>
                             <Box component="form" sx={{ mt: 2 }}>
                                 <Grid container spacing={2}>
@@ -81,13 +81,13 @@ export default function ForgotPassForm(props) {
                                 </Grid>
                             </Box>
                         </Container>
-                    </React.Fragment>
+                    </Box>
                     : ''
                 }
 
                 {fpass.otpVeriySuccess ? props.setActiveFormShow('ResetPassForm') : ''}
 
             </Box>
-        </React.Fragment>
+        </Box>
     );
 }

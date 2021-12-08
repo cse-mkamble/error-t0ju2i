@@ -119,61 +119,14 @@ export default function LeftSide() {
                 <div key={user._id} className={`message_user ${isActive(user)}`}
                     onClick={() => handleAddUser(user)}>
                     <UserCard user={user} msg={true}>
-                        {
-                            user.online
-                                ? <i className="fas fa-circle text-success" />
-                                : auth.user.following.find(item =>
-                                    item._id === user._id
-                                ) && <i className="fas fa-circle" />
-
-                        }
-
+                        {user.online ? <i className="fas fa-circle" style={{ color: 'green' }} />
+                            : auth.user.following.find(item =>
+                                item._id === user._id
+                            ) && <i className="fas fa-circle" />}
                     </UserCard>
-                </div>
-            ))}
+                </div>))}
         </>}
-
             <button ref={pageEnd} style={{ opacity: 0 }} >Load More</button>
         </Box>
-
-        {/* <div className="message_chat_list">
-                {
-                    searchUsers.length !== 0
-                        ? <>
-                            {
-                                searchUsers.map(user => (
-                                    <div key={user._id} className={`message_user ${isActive(user)}`}
-                                        onClick={() => handleAddUser(user)}>
-                                        <UserCard user={user} />
-                                    </div>
-                                ))
-                            }
-
-                        </>
-                        : <>
-                            {
-                                message.users.map(user => (
-                                    <div key={user._id} className={`message_user ${isActive(user)}`}
-                                        onClick={() => handleAddUser(user)}>
-                                        <UserCard user={user} msg={true}>
-                                            {
-                                                user.online
-                                                    ? <i className="fas fa-circle text-success" />
-                                                    : auth.user.following.find(item =>
-                                                        item._id === user._id
-                                                    ) && <i className="fas fa-circle" />
-
-                                            }
-
-                                        </UserCard>
-                                    </div>
-                                ))
-                            }
-                        </>
-                }
-
-                <button ref={pageEnd} style={{ opacity: 0 }} >Load More</button>
-            </div> */}
-
     </Box >);
 }

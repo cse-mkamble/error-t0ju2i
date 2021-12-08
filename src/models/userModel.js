@@ -25,23 +25,23 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    avatar:{
+    avatar: {
         type: String,
-        default: 'https://res.cloudinary.com/mayurkamble/image/upload/v1623832874/146-1468479_my-profile-icon-blank-profile-picture-circle-hd_pbd3h3.png'
+        default: 'https://res.cloudinary.com/mayurkamble/image/upload/v1638554362/lemkvrb9c9a8ekpbvsqy.jpg'
     },
-    role: {type: String, default: 'user'},
-    gender: {type: String, default: 'male'},
-    mobile: {type: String, default: ''},
-    address: {type: String, default: ''},
+    role: { type: String, default: 'user' },
+    gender: { type: String, default: 'male' },
+    mobile: { type: String, default: '' },
+    address: { type: String, default: '' },
     story: {
-        type: String, 
+        type: String,
         default: '',
         maxlength: 200
     },
-    website: {type: String, default: ''},
-    followers: [{type: mongoose.Types.ObjectId, ref: 'user'}],
-    following: [{type: mongoose.Types.ObjectId, ref: 'user'}],
-    saved: [{type: mongoose.Types.ObjectId, ref: 'user'}]
+    website: { type: String, default: '' },
+    followers: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
+    following: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
+    saved: [{ type: mongoose.Types.ObjectId, ref: 'user' }]
 }, {
     timestamps: true
 })

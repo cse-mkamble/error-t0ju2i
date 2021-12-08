@@ -80,71 +80,70 @@ export default function Login() {
     }
 
     return (
-        <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <Box
-                    sx={{
-                        marginTop: 8,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
+        <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
 
-                    <div style={{ display: 'flex' }}>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <img style={{ width: '54px', height: '54px' }} src='https://res.cloudinary.com/mayurkamble/image/upload/v1636887085/icon/bptheulgfynt1npaui36.png' />
-                        </div>
-                        <div>
-                            <Typography component="h1" variant="h5">
-                                <div style={{ margin: '10px', fontFamily: "'Chocolate', sans-serif", fontSize: '40px', fontWeight: 'bolder', letterSpacing: '4px' }}>FunBook</div>
-                            </Typography>
-                        </div>
+                <div style={{ display: 'flex' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <img style={{ width: '54px', height: '54px' }} src='https://res.cloudinary.com/mayurkamble/image/upload/v1636887085/icon/bptheulgfynt1npaui36.png' />
                     </div>
+                    <div>
+                        <Typography component="h1" variant="h5">
+                            <div style={{ margin: '10px', fontFamily: "'Chocolate', sans-serif", fontSize: '40px', fontWeight: 'bolder', letterSpacing: '4px' }}>FunBook</div>
+                        </Typography>
+                    </div>
+                </div>
 
-                    {
-                        activeFormShow === 'LoginForm' ?
-                            <LoginForm
-                                handleSubmitLogin={handleSubmitLogin}
-                                userData={userData}
-                                handleChangeInput={handleChangeInput}
-                                setActiveFormShow={setActiveFormShow}
-                                initialState={initialState}
-                                setUserData={setUserData}
-                            />
-                            : ''
-                    }
+                {
+                    activeFormShow === 'LoginForm' ?
+                        <LoginForm
+                            handleSubmitLogin={handleSubmitLogin}
+                            userData={userData}
+                            handleChangeInput={handleChangeInput}
+                            setActiveFormShow={setActiveFormShow}
+                            initialState={initialState}
+                            setUserData={setUserData}
+                        />
+                        : ''
+                }
 
-                    {
-                        activeFormShow === 'ForgotPassForm' ?
-                            <ForgotPassForm
-                                handleSentMail={handleSubmitSentMail}
-                                userData={userData}
-                                handleSubmitVerifyOTP={handleSubmitVerifyOTP}
-                                handleChangeInput={handleChangeInput}
-                                handleChangeSelectInput={handleChangeSelectInput}
-                                setActiveFormShow={setActiveFormShow}
-                            />
-                            : ''
-                    }
+                {
+                    activeFormShow === 'ForgotPassForm' ?
+                        <ForgotPassForm
+                            handleSentMail={handleSubmitSentMail}
+                            userData={userData}
+                            handleSubmitVerifyOTP={handleSubmitVerifyOTP}
+                            handleChangeInput={handleChangeInput}
+                            handleChangeSelectInput={handleChangeSelectInput}
+                            setActiveFormShow={setActiveFormShow}
+                        />
+                        : ''
+                }
 
-                    {
-                        activeFormShow === 'ResetPassForm' ?
-                            <ResetPassForm
-                                handleSubmitResetPass={handleSubmitResetPass}
-                                userData={userData}
-                                handleChangeInput={handleChangeInput}
-                                handleChangeSelectInput={handleChangeSelectInput}
-                                setActiveFormShow={setActiveFormShow}
-                            />
-                            : ''
-                    }
-
-
+                {
+                    activeFormShow === 'ResetPassForm' ?
+                        <ResetPassForm
+                            handleSubmitResetPass={handleSubmitResetPass}
+                            userData={userData}
+                            handleChangeInput={handleChangeInput}
+                            handleChangeSelectInput={handleChangeSelectInput}
+                            setActiveFormShow={setActiveFormShow}
+                        />
+                        : ''
+                }
 
 
-                    {/* {NewPassFormShow ? '' : (
+
+
+                {/* {NewPassFormShow ? '' : (
                         <div>
                             {ForgotPassFormShow ?
                                 <ForgotPassForm
@@ -165,9 +164,8 @@ export default function Login() {
                     )
                     } */}
 
-                </Box>
-                <Copyright sx={{ mt: 10 }} />
-            </Container>
-        </ThemeProvider>
+            </Box>
+            <Copyright sx={{ mt: 10 }} />
+        </Container>
     );
 }

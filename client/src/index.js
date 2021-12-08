@@ -42,6 +42,12 @@ function MainRoute() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+
+
+    document.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
+
     dispatch(refreshToken())
 
     const socket = io()
@@ -110,27 +116,6 @@ function MainRoute() {
       </div>
     </Router>
   );
-}
-
-
-
-
-class AppRoutes extends React.Component {
-
-
-  componentDidMount() {
-
-    // document.addEventListener('contextmenu', (e) => {
-    //   e.preventDefault();
-    // });
-
-  };
-
-  render() {
-    return (
-      <div>hello world!</div>
-    )
-  }
 }
 
 ReactDOM.render(

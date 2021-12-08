@@ -20,7 +20,7 @@ export default function LoginForm(props) {
     const [rememberMe, setRememberMe] = useState(false);
 
     return (
-        <React.Fragment>
+        <Box>
             <Box component="form" onSubmit={props.handleSubmitLogin} noValidate sx={{ mt: 1 }}>
                 <TextField
                     margin="normal"
@@ -105,6 +105,6 @@ export default function LoginForm(props) {
                     </Grid>
                 </Grid>
             </Box>
-        </React.Fragment>
+        </Box>
     );
 }

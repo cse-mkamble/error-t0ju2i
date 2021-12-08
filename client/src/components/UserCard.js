@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-
-import { Avatar, Link, Typography, Box } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { Avatar, Typography, Box } from '@mui/material';
 
 export default function UserCard({ children, user, border, handleClose, setShowFollowers, setShowFollowing, msg }) {
     const { theme } = useSelector(state => state);
@@ -38,7 +38,11 @@ export default function UserCard({ children, user, border, handleClose, setShowF
 
     return (<Box sx={{ width: '100%', padding: '10px', display: 'flex', justifyContent: 'space-between', alignItem: 'center' }}>
         <Box>
-            <Link sx={{ display: 'flex', alignItems: 'center' }} href={`/profile/${user._id}`} underline="none" onClick={handleCloseAll}>
+            <Link
+                style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'black' }}
+                to={`/profile/${user._id}`}
+                onClick={handleCloseAll}
+            >
                 <Avatar alt="" src={user.avatar} />
                 <Box sx={{ marginLeft: '5px', transform: 'translateY(-2px)' }}>
                     <span style={{ display: 'block' }}>{user.username}</span>

@@ -135,7 +135,7 @@ export default function MenuBar(props) {
                     <PersonIcon aria-label="Profile" color="primary" />
                     <FormLabel sx={{ mx: 1 }}>Profile</FormLabel>
                 </MenuItem>
-                {theme ? <MenuItem onClick={() => dispatch({
+                {/* {theme ? <MenuItem onClick={() => dispatch({
                     type: GLOBALTYPES.THEME, payload: !theme
                 })} >
                     <LightModeIcon aria-label="Light Mode"
@@ -147,7 +147,7 @@ export default function MenuBar(props) {
                     <DarkModeIcon aria-label="Light Mode"
                         color="primary" />
                     <FormLabel sx={{ mx: 1 }}>Dark Mode</FormLabel>
-                </MenuItem >}
+                </MenuItem >} */}
                 <Divider />
                 <MenuItem onClick={() => dispatch(logout())} >
                     <LogoutIcon aria-label="Logout"
