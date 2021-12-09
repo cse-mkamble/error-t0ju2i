@@ -42,6 +42,15 @@
 
 <body class="noselect">
   <div id="app-main"></div>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('%PUBLIC_URL%/service-worker.js')
+          .then((reg) => console.log('Success: ', reg.scope))
+          .catch((err) => console.log('Failure: ', err))
+      })
+    }
+  </script>
 </body>
 
 </html>
