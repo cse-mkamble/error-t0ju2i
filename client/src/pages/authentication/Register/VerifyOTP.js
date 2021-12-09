@@ -8,7 +8,7 @@ import OtpInput from "../../../components/UI/OTPInput";
 export default function VerifyOTP(props) {
 
     return (
-        <React.Fragment>
+        <Box>
             <Container sx={{ mt: 2 }}>
                 <Alert severity="success">A OTP ( One Time Password ) has been sent to your mail.</Alert>
                 <Box component="form" noValidate onSubmit={props.handleOTPFormSubmit} sx={{ mt: 3 }}>
@@ -47,6 +47,6 @@ export default function VerifyOTP(props) {
                     >Resend OTP</Button>
                 </Grid>
             </Container>
-        </React.Fragment>
+        </Box>
     );
 }

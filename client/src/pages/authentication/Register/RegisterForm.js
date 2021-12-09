@@ -11,7 +11,7 @@ export default function RegisterForm(props) {
     const [show_password, setShowPassword] = useState('password');
 
     return (
-        <React.Fragment>
+        <Box>
             <Box component="form" noValidate onSubmit={props.handleRegisterFormSubmit} sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
@@ -122,6 +122,6 @@ export default function RegisterForm(props) {
                 </Grid>
             </Box>
             {alert.success ? props.handleNext() : ''}
-        </React.Fragment>
+        </Box>
     )
 }

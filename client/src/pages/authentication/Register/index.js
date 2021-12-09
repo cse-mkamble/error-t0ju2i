@@ -101,7 +101,7 @@ export default function Register() {
                         </div>
                     </div>
 
-                    <React.Fragment>
+                    <Box>
                         {activeStep === 0 ? (
                             <RegisterForm
                                 handleNext={handleNext}
@@ -117,7 +117,7 @@ export default function Register() {
                                 handleRegisterFormSubmit={handleRegisterFormSubmit}
                             />
                         )}
-                    </React.Fragment>
+                    </Box>
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 2 }} />
             </Container>
