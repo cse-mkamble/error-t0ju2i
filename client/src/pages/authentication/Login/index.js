@@ -8,7 +8,6 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { login, forgotPassOTPSendMail, forgotPassOTPVerify, resetPassword } from '../../../redux/actions/authAction';
 
@@ -29,20 +28,14 @@ function Copyright(props) {
     );
 }
 
-const theme = createTheme();
-
 export default function Login() {
-
     const initialState = { email: '', password: '', otp: '', newPassword: '', new_cf_password: '' };
     const [userData, setUserData] = useState(initialState);
     const { email, password } = userData;
 
     const [activeFormShow, setActiveFormShow] = useState('LoginForm');
 
-    const [ForgotPassFormShow, setForgotPassFormShow] = useState(false);
-    const [NewPassFormShow, setNewPassFormShow] = useState(false);
-
-    const { auth, fpass } = useSelector(state => state);
+    const { auth } = useSelector(state => state);
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -82,15 +75,12 @@ export default function Login() {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-
+            <Box sx={{
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            }} >
                 <div style={{ display: 'flex' }}>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <img style={{ width: '54px', height: '54px' }} src='https://res.cloudinary.com/mayurkamble/image/upload/v1636887085/icon/bptheulgfynt1npaui36.png' />
@@ -101,68 +91,31 @@ export default function Login() {
                         </Typography>
                     </div>
                 </div>
+                {activeFormShow === 'LoginForm' ? <LoginForm
+                    handleSubmitLogin={handleSubmitLogin}
+                    userData={userData}
+                    handleChangeInput={handleChangeInput}
+                    setActiveFormShow={setActiveFormShow}
+                    initialState={initialState}
+                    setUserData={setUserData}
+                /> : ''}
 
-                {
-                    activeFormShow === 'LoginForm' ?
-                        <LoginForm
-                            handleSubmitLogin={handleSubmitLogin}
-                            userData={userData}
-                            handleChangeInput={handleChangeInput}
-                            setActiveFormShow={setActiveFormShow}
-                            initialState={initialState}
-                            setUserData={setUserData}
-                        />
-                        : ''
-                }
+                {activeFormShow === 'ForgotPassForm' ? <ForgotPassForm
+                    handleSentMail={handleSubmitSentMail}
+                    userData={userData}
+                    handleSubmitVerifyOTP={handleSubmitVerifyOTP}
+                    handleChangeInput={handleChangeInput}
+                    handleChangeSelectInput={handleChangeSelectInput}
+                    setActiveFormShow={setActiveFormShow}
+                /> : ''}
 
-                {
-                    activeFormShow === 'ForgotPassForm' ?
-                        <ForgotPassForm
-                            handleSentMail={handleSubmitSentMail}
-                            userData={userData}
-                            handleSubmitVerifyOTP={handleSubmitVerifyOTP}
-                            handleChangeInput={handleChangeInput}
-                            handleChangeSelectInput={handleChangeSelectInput}
-                            setActiveFormShow={setActiveFormShow}
-                        />
-                        : ''
-                }
-
-                {
-                    activeFormShow === 'ResetPassForm' ?
-                        <ResetPassForm
-                            handleSubmitResetPass={handleSubmitResetPass}
-                            userData={userData}
-                            handleChangeInput={handleChangeInput}
-                            handleChangeSelectInput={handleChangeSelectInput}
-                            setActiveFormShow={setActiveFormShow}
-                        />
-                        : ''
-                }
-
-
-
-
-                {/* {NewPassFormShow ? '' : (
-                        <div>
-                            {ForgotPassFormShow ?
-                                <ForgotPassForm
-                                    handleSentMail={handleSubmitSentMail}
-                                    userData={userData}
-                                    handleVerifyOTP={handleVerifyOTP}
-                                    handleChangeSelectInput={handleChangeSelectInput}
-                                />
-                                :
-                                <LoginForm
-                                    handleSubmitLogin={handleSubmitLogin}
-                                    userData={userData}
-                                    handleChangeInput={handleChangeInput}
-                                    setForgotPassFormShow={setForgotPassFormShow}
-                                />
-                            }
-                        </div>
-                    )
-                    } */}
+                {activeFormShow === 'ResetPassForm' ? <ResetPassForm
+                    handleSubmitResetPass={handleSubmitResetPass}
+                    userData={userData}
+                    handleChangeInput={handleChangeInput}
+                    handleChangeSelectInput={handleChangeSelectInput}
+                    setActiveFormShow={setActiveFormShow}
+                /> : ''}
 
             </Box>
             <Copyright sx={{ mt: 10 }} />
