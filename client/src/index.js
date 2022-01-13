@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { Box } from '@mui/material';
 
 import DataProvider from './redux/store';
+import './styles/global.css';
 
 import MobileHome from './pages/mobile/Home';
 import DesktopHome from './pages/desktop/Home';
@@ -37,7 +38,9 @@ function MainRoute() {
 
 ReactDOM.render(
   <DataProvider>
-    <MainRoute />
+    <div className='main'>
+      <MainRoute />
+    </div>
   </DataProvider>,
   document.getElementById('app-main')
 );
