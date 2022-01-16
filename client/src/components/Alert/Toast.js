@@ -13,7 +13,7 @@ export default function Toast({ msg, handleShow, severityType }) {
                 severityType={severityType}
             />
         </Box>
-        <Box sx={{ display: { xs: 'flex', sm: 'none' } }} >
+        <Box sx={{ display: { xs: 'block', sm: 'none' } }} >
             <MobileToast
                 msg={msg}
                 handleShow={handleShow}

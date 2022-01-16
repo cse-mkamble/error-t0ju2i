@@ -6,12 +6,12 @@ import { Box } from '@mui/material';
 import DesktopHead from '../../components/desktop/Head';
 import MobileHead from '../../components/mobile/Head';
 
-import MobileHome from '../mobile/Home';
-import DesktopHome from '../desktop/Home';
+import MobileWatch from '../mobile/Watch';
+import DesktopWatch from '../desktop/Watch';
 
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 
-export default function Home() {
+export default function Watch() {
     const dispatch = useDispatch();
     const { auth } = useSelector(state => state);
 
@@ -19,7 +19,7 @@ export default function Home() {
         dispatch({
             type: GLOBALTYPES.CURRENTTAB,
             payload: {
-                Tab: 'Home'
+                Tab: 'Watch'
             }
         });
     }, []);
@@ -27,11 +27,11 @@ export default function Home() {
     return (<Box sx={{ width: '100%' }}>
         <Box sx={{ display: { xs: 'none', sm: 'block' } }} >
             {auth.token && <DesktopHead />}
-            <DesktopHome />
+            <DesktopWatch />
         </Box>
         <Box sx={{ display: { xs: 'block', sm: 'none' } }} >
             {auth.token && <MobileHead />}
-            <MobileHome />
+            <MobileWatch />
         </Box>
     </Box>);
 }

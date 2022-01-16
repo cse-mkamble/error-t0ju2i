@@ -1,5 +1,6 @@
 export const GLOBALTYPES = {
     AUTH: "AUTH",
+    CURRENTTAB: "CURRENTTAB",
     FSPASS: "FSPASS",
     FVPASS: "FVPASS",
     ALERT: "ALERT",

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Peer from 'peerjs';
 import io from 'socket.io-client';
@@ -12,10 +12,16 @@ import DataProvider from './redux/store';
 import './styles/global.css';
 
 import Alert from './components/Alert';
+import NotFound from './components/NotFound';
+
+import PrivateRouter from './customRouter/PrivateRouter';
 
 import Home from './pages/Home';
 import Login from './pages/authentication/Login';
 import Register from './pages/authentication/Register';
+
+import Watch from './pages/Watch';
+import Explore from './pages/Explore';
 
 import { refreshToken } from './redux/actions/authAction';
 import { getPosts } from './redux/actions/postAction';
@@ -72,12 +78,9 @@ function MainRoute() {
       <Switch>
         <Route exact path="/" component={auth.token ? Home : Login} />
         <Route exact path="/register" component={Register} />
-        <Box sx={{ display: { xs: 'none', sm: 'block' } }} >
-
-        </Box>
-        <Box sx={{ display: { xs: 'flex', sm: 'none' } }} >
-
-        </Box>
+        <PrivateRouter exact path="/watch" component={Watch} />
+        <PrivateRouter exact path="/explore" component={Explore} />
+        <Route exact path="*" component={NotFound} />
       </Switch>
     </Router>
   </Box >);
@@ -85,9 +88,7 @@ function MainRoute() {
 
 ReactDOM.render(
   <DataProvider>
-    <div className='main'>
-      <MainRoute />
-    </div>
+    <MainRoute />
   </DataProvider>,
   document.getElementById('app-main')
 );
