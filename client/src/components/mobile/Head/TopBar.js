@@ -4,11 +4,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-export default function TopBar() {
+export default function TopBar(props) {
     return (<Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={{ background: '#fff' }}>
             <Toolbar variant="dense">
-                <IconButton edge="start" color="primary" aria-label="menu">
+                <IconButton
+                    edge="start"
+                    color="primary"
+                    aria-label="menu"
+                    onClick={props.handleDrawerToggle}
+                >
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" color="primary" component="div">

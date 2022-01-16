@@ -32,4 +32,6 @@ npm install typescript
 
 npm install swiper --save
 
+npm install --save prop-types
+
 cd ..
