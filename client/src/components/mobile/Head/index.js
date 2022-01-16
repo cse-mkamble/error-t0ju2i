@@ -19,6 +19,7 @@ export default function Head() {
         <TopBar handleDrawerToggle={handleDrawerToggle} />
         <BottomBar auth={auth} currentTab={currentTab} />
         <SideBar
+            auth={auth}
             drawerOpen={drawerOpen}
             handleDrawerToggle={handleDrawerToggle}
         />
