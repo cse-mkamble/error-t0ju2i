@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 
 import PostCard from "./PostCard";
 
-// import LoadMoreBtn from '../LoadMoreBtn';
+import LoadMorePosts from '../LoadMorePosts';
 import LoadingData from "../LoadingData";
 
 import { POST_TYPES } from '../../redux/actions/postAction';
@@ -26,11 +26,12 @@ export default function Posts() {
         setLoad(false);
     }
 
-    return (<Box>
+    return (<Box sx={{ mb: 2 }} >
         {homePosts.posts.map(post => (
             <PostCard key={post._id} post={post} />
         ))}
         {load && <LoadingData />}
-
+        <LoadMorePosts result={homePosts.result} page={homePosts.page}
+            load={load} handleLoadMore={handleLoadMore} />
     </Box>);
 }
