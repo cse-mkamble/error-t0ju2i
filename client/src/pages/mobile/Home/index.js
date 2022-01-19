@@ -5,6 +5,7 @@ import { Box, Typography } from '@mui/material';
 
 import LoadingData from "../../../components/LoadingData";
 import Posts from "../../../components/Home/Posts";
+import Suggestions from "../../../components/Suggestions";
 
 let scroll = 0;
 
@@ -26,9 +27,10 @@ export default function Home() {
     }, []);
 
     return (<Box>
-        {homePosts.loading ? <LoadingData /> : (
+        {/* {homePosts.loading ? <LoadingData /> : (
             homePosts.result === 0 && homePosts.posts.length === 0
         ) ? <Typography component='div' variant='h3' sx={{ textAlign: 'center' }}>No Post</Typography>
-            : <Posts />}
+            : <Posts />} */}
+        <Suggestions />
     </Box>);
 }
