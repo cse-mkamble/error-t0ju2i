@@ -56,7 +56,7 @@ export default function PostCardFooter({ post }) {
             <IconButton
                 size="small"
                 aria-label="Comment"
-                color="default"
+                color={post.comments.length > 0 ? "primary" : "default"}
                 href={`/post/${post._id}`}
             ><ChatIcon /><Typography >Comment</Typography>
             </IconButton>

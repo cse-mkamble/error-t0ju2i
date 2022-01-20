@@ -27,10 +27,10 @@ export default function Home() {
     }, []);
 
     return (<Box>
-        {/* {homePosts.loading ? <LoadingData /> : (
+        {homePosts.loading ? <LoadingData /> : (
             homePosts.result === 0 && homePosts.posts.length === 0
         ) ? <Typography component='div' variant='h3' sx={{ textAlign: 'center' }}>No Post</Typography>
-            : <Posts />} */}
+            : <Posts />}
         <Suggestions />
     </Box>);
 }

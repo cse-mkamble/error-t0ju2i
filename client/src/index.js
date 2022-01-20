@@ -22,6 +22,7 @@ import Register from './pages/authentication/Register';
 
 import Watch from './pages/Watch';
 import Explore from './pages/Explore';
+import Post from './pages/Post/[id]';
 
 import { refreshToken } from './redux/actions/authAction';
 import { getPosts } from './redux/actions/postAction';
@@ -75,11 +76,13 @@ function MainRoute() {
   return (<Box>
     <Alert />
     <Router>
+      {auth.token && <SocketClient />}
       <Switch>
         <Route exact path="/" component={auth.token ? Home : Login} />
         <Route exact path="/register" component={Register} />
         <PrivateRouter exact path="/watch" component={Watch} />
         <PrivateRouter exact path="/explore" component={Explore} />
+        <PrivateRouter exact path="/post/:id" component={Post} />
         <Route exact path="*" component={NotFound} />
       </Switch>
     </Router>
