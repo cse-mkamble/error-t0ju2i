@@ -1,12 +1,10 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Peer from 'peerjs';
 import io from 'socket.io-client';
-
-import { Box } from '@mui/material';
 
 import DataProvider from './redux/store';
 import './styles/global.css';
@@ -73,20 +71,18 @@ function MainRoute() {
     dispatch({ type: GLOBALTYPES.PEER, payload: newPeer });
   }, [dispatch]);
 
-  return (<Box>
+  return (<Router>
     <Alert />
-    <Router>
-      {auth.token && <SocketClient />}
-      <Switch>
-        <Route exact path="/" component={auth.token ? Home : Login} />
-        <Route exact path="/register" component={Register} />
-        <PrivateRouter exact path="/watch" component={Watch} />
-        <PrivateRouter exact path="/explore" component={Explore} />
-        <PrivateRouter exact path="/post/:id" component={Post} />
-        <Route exact path="*" component={NotFound} />
-      </Switch>
-    </Router>
-  </Box >);
+    {auth.token && <SocketClient />}
+    <Switch>
+      <Route exact path="/" component={auth.token ? Home : Login} />
+      <Route exact path="/register" component={Register} />
+      <PrivateRouter exact path="/watch" component={Watch} />
+      <PrivateRouter exact path="/explore" component={Explore} />
+      <PrivateRouter exact path="/post/:id" component={Post} />
+      <Route exact path="*" component={NotFound} />
+    </Switch>
+  </Router>);
 }
 
 ReactDOM.render(
