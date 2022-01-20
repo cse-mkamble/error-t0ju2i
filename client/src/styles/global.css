@@ -28,3 +28,6 @@ img {
 
 /* -------- LOADING ---------- */
 @import url("./loading.css");
+
+/* -------- post_thumb ---------- */
+@import url("./post_thumb.css");

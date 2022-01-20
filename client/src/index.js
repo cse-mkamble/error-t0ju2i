@@ -30,6 +30,8 @@ import { getNotifies } from './redux/actions/notifyAction';
 
 import SocketClient from './SocketClient';
 
+import './styles/global.css';
+
 function MainRoute() {
   const { auth } = useSelector(state => state);
   const dispatch = useDispatch();
