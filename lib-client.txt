@@ -32,4 +32,7 @@ npm install typescript
 
 npm install swiper --save
 
+npm install --save prop-types
+npm install --save @material-ui/core
+
 cd ..

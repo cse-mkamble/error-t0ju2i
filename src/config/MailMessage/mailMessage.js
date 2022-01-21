@@ -6,7 +6,7 @@ module.exports = mailMessage = (mailBody) => {
                     <div>
                         <div>
                             <div style="width: 100%; text-align: center;">
-                                <img style="width: 54px; height: 54px"
+                                <img style="height: 54px"
                                     src='${process.env.ICON_IMAGE}' />
                             </div>
                         </div>
